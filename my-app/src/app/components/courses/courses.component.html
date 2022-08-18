@@ -1,0 +1,23 @@
+<div class="courses-container" *ngIf="course">
+  <div class="title-container">
+    <h3>{{ course.title }}</h3>
+    <div class="time-container">
+      <i class="fa-regular fa-clock"></i>
+      <p class="duration">{{ course.duration}} min</p>
+      <i class="fa-regular fa-calendar-days"></i>
+      <p class="creationDate">{{ course.creationDate | date:'d LLL yyyy' }}</p>
+    </div>
+  </div>
+  <div class="description-container">
+    <p class="description-text">
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+      Amet aspernatur ex fuga labore laboriosam numquam ratione
+      reprehenderit sequi sit veniam.
+    </p>
+    <div class="buttons-container">
+      <button class="edit"><i class="fa-solid fa-pencil"></i> Edit</button>
+      <button class="delete"><i class="fa-solid fa-trash"></i> Delete </button>
+    </div>
+  </div>
+</div>
+
