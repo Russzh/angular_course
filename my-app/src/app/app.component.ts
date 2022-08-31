@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import * as _ from 'lodash';
 
 export interface Course {
   id: number;
@@ -7,6 +8,7 @@ export interface Course {
   duration: number;
   description: string;
 }
+
 const NUMBER_OF_COURSES: number = 3;
 
 const COURSE_DATA: Course = {
@@ -29,6 +31,19 @@ export class AppComponent implements OnInit {
   courses: Course[] | undefined;
 
   ngOnInit(): void {
-    this.courses = Array(NUMBER_OF_COURSES).fill(COURSE_DATA)
+    this.courses = Array(NUMBER_OF_COURSES).fill(COURSE_DATA).map(item => {
+      const MAX_RANDOM_VALUE = 100;
+      let copiedItem = _.clone(item);
+      copiedItem.id = _.random(MAX_RANDOM_VALUE);
+      return copiedItem
+    });
+  }
+
+  public onDeleteCourse(courseId: number): void {
+    console.log(courseId);
+  }
+
+  public trackByFn(index: number, item: Course) {
+    return item.id;
   }
 }

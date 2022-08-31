@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, Output, EventEmitter} from '@angular/core';
 import {Course} from "../../app.component";
 
 @Component({
@@ -8,8 +8,13 @@ import {Course} from "../../app.component";
 })
 export class CoursesComponent {
   @Input() course: Course | undefined;
+  @Output() deleteCourse = new EventEmitter<number>();
 
-  durationHandler(duration: number): string {
+  public deleteButtonClicked(value: number) {
+    this.deleteCourse.emit(value)
+  }
+
+  public durationHandler(duration: number): string {
     const MIN_IN_HOUR: number = 60;
     const divisionOfDuration: number = duration / MIN_IN_HOUR;
     const remainderOfDivision: number = duration % MIN_IN_HOUR;

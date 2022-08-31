@@ -1,12 +1,14 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
 
-import { AppComponent } from './app.component';
-import { CoursesComponent } from './components/courses/courses.component';
-import { HeaderComponent } from './components/header/header.component';
-import { FooterComponent } from './components/footer/footer.component';
-import { BreadcrumbsComponent } from './components/breadcrumbs/breadcrumbs.component';
-import { SectionComponent } from './components/section/section.component';
+import {AppComponent} from './app.component';
+import {CoursesComponent} from './components/courses/courses.component';
+import {HeaderComponent} from './components/header/header.component';
+import {FooterComponent} from './components/footer/footer.component';
+import {BreadcrumbsComponent} from './components/breadcrumbs/breadcrumbs.component';
+import {SectionComponent} from './components/section/section.component';
+import {LoadMoreButtonComponent} from './components/load-more-button/load-more-button.component';
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -16,11 +18,14 @@ import { SectionComponent } from './components/section/section.component';
     FooterComponent,
     BreadcrumbsComponent,
     SectionComponent,
+    LoadMoreButtonComponent,
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

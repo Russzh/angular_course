@@ -1,0 +1,27 @@
+.header-container,
+.logo-container,
+.buttons-container,
+.user-button,
+.login-button {
+  display: flex;
+  color: white;
+}
+
+.header-container {
+  align-items: center;
+  justify-content: space-between;
+  height: 40px;
+  background-color: black;
+
+  .logo-container {
+    margin-left: 10%;
+
+    .logo-text {
+      align-self: center;
+    }
+  }
+
+  .buttons-container {
+    margin-right: 5%;
+  }
+}
