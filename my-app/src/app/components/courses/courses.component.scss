@@ -1,0 +1,51 @@
+.courses-container {
+  width: 90%;
+  margin: auto auto 20px;
+  padding: 20px;
+  border-radius: 20px;
+  background: aliceblue;
+
+  .title-container,
+  .time-container,
+  .description-container,
+  .description-container.buttons-container {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .description-container, .title-container {
+    justify-content: space-between;
+  }
+
+  .time-container {
+    align-self: end;
+    width: 45%;
+
+    i {
+      align-self: center;
+    }
+
+    .duration {
+      margin-right: 10%;
+    }
+  }
+
+  .description-container {
+    margin-top: 20px;
+
+    .description-text {
+      max-width: 70%;
+    }
+
+    .buttons-container button {
+      max-width: 100%;
+      padding: 5px;
+      border-radius: 10px;
+      background: cornflowerblue;
+
+      &:first-child {
+        margin-right: 10px;
+      }
+    }
+  }
+}
