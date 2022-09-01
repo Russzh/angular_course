@@ -3,7 +3,7 @@
     <h3>{{ course.title }}</h3>
     <div class="time-container">
       <i class="fa-regular fa-clock"></i>
-      <p class="duration">{{ durationHandler(course.duration) }}  </p>
+      <p class="duration">{{ course.duration | durationHandlerPape }}  </p>
       <i class="fa-regular fa-calendar-days"></i>
       <p class="creationDate">{{ course.creationDate | date:'d LLL yyyy' }}</p>
     </div>
@@ -15,8 +15,10 @@
       reprehenderit sequi sit veniam.
     </p>
     <div class="buttons-container">
-      <button class="edit-button"><i class="fa-solid fa-pencil"></i> Edit </button>
-      <button class="delete-button" (click)="deleteButtonClicked(course.id)"><i class="fa-solid fa-trash"></i> Delete </button>
+      <button class="edit-button"><i class="fa-solid fa-pencil"></i> Edit</button>
+      <button class="delete-button" (click)="deleteButtonClicked(course.id)">
+        <i class="fa-solid fa-trash"></i> Delete
+      </button>
     </div>
   </div>
 </div>

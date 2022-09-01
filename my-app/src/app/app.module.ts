@@ -1,5 +1,6 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
+import {FormsModule} from "@angular/forms";
 
 import {AppComponent} from './app.component';
 import {CoursesComponent} from './components/courses/courses.component';
@@ -8,7 +9,7 @@ import {FooterComponent} from './components/footer/footer.component';
 import {BreadcrumbsComponent} from './components/breadcrumbs/breadcrumbs.component';
 import {SectionComponent} from './components/section/section.component';
 import {LoadMoreButtonComponent} from './components/load-more-button/load-more-button.component';
-import {FormsModule} from "@angular/forms";
+import {DurationHandlerPipe} from "./shared";
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import {FormsModule} from "@angular/forms";
     BreadcrumbsComponent,
     SectionComponent,
     LoadMoreButtonComponent,
+    DurationHandlerPipe
   ],
   imports: [
     BrowserModule,

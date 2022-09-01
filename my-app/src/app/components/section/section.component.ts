@@ -1,16 +1,13 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
 
 @Component({
   selector: 'app-section',
   templateUrl: './section.component.html',
-  styleUrls: ['./section.component.scss']
+  styleUrls: ['./section.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SectionComponent implements OnInit {
-  public courseName: string | undefined;
-
-  ngOnInit(): void {
-    this.courseName = ''
-  }
+export class SectionComponent {
+  public courseName: string = ''
 
   public searchButtonClicked(): void {
     console.log(this.courseName);

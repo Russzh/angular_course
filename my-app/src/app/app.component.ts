@@ -1,15 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import * as _ from 'lodash';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {clone, random} from 'lodash';
 
-export interface Course {
-  id: number;
-  title: string;
-  creationDate: Date;
-  duration: number;
-  description: string;
-}
+import {Course} from "./shared";
 
 const NUMBER_OF_COURSES: number = 3;
+const MAX_RANDOM_VALUE = 100;
 
 const COURSE_DATA: Course = {
   id: 1,
@@ -24,7 +19,8 @@ const COURSE_DATA: Course = {
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class AppComponent implements OnInit {
@@ -32,9 +28,8 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.courses = Array(NUMBER_OF_COURSES).fill(COURSE_DATA).map(item => {
-      const MAX_RANDOM_VALUE = 100;
-      let copiedItem = _.clone(item);
-      copiedItem.id = _.random(MAX_RANDOM_VALUE);
+      let copiedItem = clone(item);
+      copiedItem.id = random(MAX_RANDOM_VALUE);
       return copiedItem
     });
   }
