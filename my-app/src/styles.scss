@@ -18,9 +18,9 @@ dd {
 
 body {
   font-family: 'Source Sans Pro', sans-serif;
-  min-height: 100vh;
   scroll-behavior: smooth;
   text-rendering: optimizeSpeed;
+  background-color: lightgray;
 }
 
 a {
@@ -40,7 +40,14 @@ img {
 }
 
 button {
+  background: none;
   border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+input {
+  padding: 0;
 }
 
 i {

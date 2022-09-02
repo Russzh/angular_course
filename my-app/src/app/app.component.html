@@ -2,8 +2,10 @@
 <app-breadcrumbs></app-breadcrumbs>
 <app-section></app-section>
 <app-courses
-  *ngFor="let iterCourse of courses"
+  *ngFor="let iterCourse of courses; trackBy: trackByFn"
   [course]="iterCourse"
+  (deleteCourse)="onDeleteCourse($event)"
 >
 </app-courses>
+<app-load-more-button></app-load-more-button>
 <app-footer></app-footer>

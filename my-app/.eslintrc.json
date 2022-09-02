@@ -18,6 +18,7 @@
         "plugin:@angular-eslint/recommended",
         "plugin:@angular-eslint/template/process-inline-templates"
       ],
+      "plugins": ["import"],
       "rules": {
         "@angular-eslint/directive-selector": [
           "error",
@@ -33,6 +34,22 @@
             "type": "element",
             "prefix": "app",
             "style": "kebab-case"
+          }
+        ],
+        "import/order": [
+          "error",
+          {
+            "groups": [
+              "builtin",
+              "external",
+              "internal",
+              "parent",
+              "sibling",
+              "index",
+              "object",
+              "type"
+            ],
+            "newlines-between": "always-and-inside-groups"
           }
         ]
       }
