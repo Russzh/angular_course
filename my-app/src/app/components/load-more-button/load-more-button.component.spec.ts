@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { LoadMoreButtonComponent } from './load-more-button.component';
+import {LoadMoreButtonComponent} from './load-more-button.component';
 
 describe('LoadMoreButtonComponent', () => {
   let component: LoadMoreButtonComponent;
@@ -8,9 +8,9 @@ describe('LoadMoreButtonComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LoadMoreButtonComponent ]
+      declarations: [LoadMoreButtonComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(LoadMoreButtonComponent);
     component = fixture.componentInstance;
@@ -19,5 +19,12 @@ describe('LoadMoreButtonComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it("should log message 'Load More Btn was clicked'", () => {
+    const consoleSpy = spyOn(console, 'log');
+    component.loadMoreButtonClicked();
+
+    expect(consoleSpy).toHaveBeenCalledWith('Load More Btn was clicked');
   });
 });

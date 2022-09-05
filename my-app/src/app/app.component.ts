@@ -1,5 +1,6 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
-import {clone, random} from 'lodash';
+import clone from 'lodash/clone';
+import random from 'lodash/random';
 
 import {Course} from "./shared";
 
@@ -38,7 +39,7 @@ export class AppComponent implements OnInit {
     console.log(courseId);
   }
 
-  public trackByFn(index: number, item: Course) {
+  public trackByFn(index: number, item: Course): number {
     return item.id;
   }
 }
