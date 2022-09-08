@@ -9,8 +9,51 @@
     margin: auto;
   }
 
+  form, .input-container {
+    display: inline-flex;
+  }
+
+  form {
+    margin: 1% 0 0 10%;
+
+    .input-container {
+      background-color: white;
+      border-radius: 5px;
+
+      .search-courses-input {
+        border: none;
+        outline: none;
+      }
+
+      .search-courses-input, .search-icon {
+        align-self: center;
+        margin-left: 10px;
+      }
+    }
+
+    .search-button {
+      padding: 7px;
+      margin-left: 5px;
+      background-color: limegreen;
+    }
+  }
+
+  .add-course-button-container, .add-course-button {
+    display: flex;
+  }
+
+  .add-course-button-container {
+    justify-content: flex-end;
+    margin-right: 10%;
+
+    .add-course-button {
+      padding: 5px;
+      background: cornflowerblue;
+    }
+  }
+
   .no-data-container {
-    margin-bottom: 65vh;
+    margin-bottom: 70vh;
     border-radius: 20px;
     background-color: white;
     line-height: 40px;

@@ -16,6 +16,7 @@ import {Course, FilterPipe} from "./shared";
 
 export class AppComponent implements OnInit {
   public courses: Course[] | undefined;
+  public searchValue: string | undefined;
 
   constructor(private filter: FilterPipe) {
   }
@@ -32,10 +33,12 @@ export class AppComponent implements OnInit {
     return item.id;
   }
 
-  public onSearchCourse(searchValue: string): void {
-    const searchValueTrimmed: string = searchValue.trim();
-    isEqual(this.courses, COURSE_DATA)
-      ? this.courses = this.filter.transform(this.courses, searchValueTrimmed)
-      : this.courses = this.filter.transform(COURSE_DATA, searchValueTrimmed)
+  public onSearchCourse(searchValue: string | undefined): void {
+    if (searchValue || searchValue === '') {
+      const searchValueTrimmed: string = searchValue.trim();
+      isEqual(this.courses, COURSE_DATA)
+        ? this.courses = this.filter.transform(this.courses, searchValueTrimmed)
+        : this.courses = this.filter.transform(COURSE_DATA, searchValueTrimmed)
+    }
   }
 }

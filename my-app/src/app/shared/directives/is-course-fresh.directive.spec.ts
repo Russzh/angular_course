@@ -14,9 +14,9 @@ describe('IsCourseFreshDirective', () => {
 
   @Component({
     template: `
-      <div class="green-border" [appIsCourseFresh]=recentCreationDate></div>
-      <div class="blue-border" [appIsCourseFresh]="upcomingCreationDate"></div>
-      <div class="none-border-sets" [appIsCourseFresh]="outdatedCreationDate"></div>`
+      <div class="green-border" [appIsCourseFresh]=recentCreationDate intervalOfActuality="14"></div>
+      <div class="blue-border" [appIsCourseFresh]="upcomingCreationDate" intervalOfActuality="14"></div>
+      <div class="none-border-sets" [appIsCourseFresh]="outdatedCreationDate" intervalOfActuality="14"></div>`
   })
   class TestComponent {
     recentCreationDate = sub(new Date(), {days: 5});

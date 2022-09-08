@@ -1,6 +1,22 @@
 <app-header></app-header>
 <app-breadcrumbs></app-breadcrumbs>
-<app-section (searchCourse)="onSearchCourse($event)"></app-section>
+<form>
+  <div class="input-container">
+    <i class="fa-solid fa-magnifying-glass search-icon"></i>
+    <input type="text"
+           [(ngModel)]="searchValue"
+           name="courseName"
+           placeholder="Input a course name"
+           class="search-courses-input">
+  </div>
+  <button class="search-button" (click)="onSearchCourse(searchValue)">Search</button>
+</form>
+<div class="add-course-button-container">
+  <button class="add-course-button">
+    <i class="fa-solid fa-plus"></i>
+    <p class="add-course-button-text">Add course</p>
+  </button>
+</div>
 <ng-container *ngIf="courses && courses.length !== 0">
   <app-courses
     *ngFor="let iterCourse of courses | orderBy: 'creationDate'; trackBy: trackByFn"
