@@ -24,10 +24,13 @@ describe('SectionComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should log value of courseName by clicking on search button', () => {
-    const consoleSpy = spyOn(console, 'log');
-    component.searchButtonClicked();
+  it('should raise a correct searchVal by clicking on search button', () => {
+    const searchValue: string = 'Course 1';
 
-    expect(consoleSpy).toHaveBeenCalledWith(component.courseName);
+    component.searchCourse.subscribe((searchVal:string): void => {
+      expect(searchVal).toBe(searchValue);
+    })
+
+    component.searchButtonClicked(searchValue);
   });
 });

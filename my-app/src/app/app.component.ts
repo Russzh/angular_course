@@ -1,38 +1,27 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
-import clone from 'lodash/clone';
-import random from 'lodash/random';
 
-import {Course} from "./shared";
+import isEqual from "lodash/isEqual";
 
-const NUMBER_OF_COURSES: number = 3;
-const MAX_RANDOM_VALUE = 100;
+import {COURSE_DATA} from "../assets/mocks/course-data.mock";
 
-const COURSE_DATA: Course = {
-  id: 1,
-  title: 'Video Course 1. Name tag',
-  creationDate: new Date(),
-  duration: 88,
-  description: 'Lorem ipsum dolor sit amet, ' +
-    'consectetur adipisicing elit. Aut corporis eaque fugiat itaque laudantium modi, ' +
-    'provident quae quidem tenetur voluptatum.'
-}
+import {Course, FilterPipe} from "./shared";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [FilterPipe]
 })
 
 export class AppComponent implements OnInit {
-  courses: Course[] | undefined;
+  public courses: Course[] | undefined;
+
+  constructor(private filter: FilterPipe) {
+  }
 
   ngOnInit(): void {
-    this.courses = Array(NUMBER_OF_COURSES).fill(COURSE_DATA).map(item => {
-      let copiedItem = clone(item);
-      copiedItem.id = random(MAX_RANDOM_VALUE);
-      return copiedItem
-    });
+    this.courses = COURSE_DATA;
   }
 
   public onDeleteCourse(courseId: number): void {
@@ -41,5 +30,12 @@ export class AppComponent implements OnInit {
 
   public trackByFn(index: number, item: Course): number {
     return item.id;
+  }
+
+  public onSearchCourse(searchValue: string): void {
+    const searchValueTrimmed: string = searchValue.trim();
+    isEqual(this.courses, COURSE_DATA)
+      ? this.courses = this.filter.transform(this.courses, searchValueTrimmed)
+      : this.courses = this.filter.transform(COURSE_DATA, searchValueTrimmed)
   }
 }

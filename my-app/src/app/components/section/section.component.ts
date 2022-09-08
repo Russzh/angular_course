@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Output} from '@angular/core';
 
 @Component({
   selector: 'app-section',
@@ -7,9 +7,10 @@ import {ChangeDetectionStrategy, Component} from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SectionComponent {
+  @Output() searchCourse = new EventEmitter<string>();
   public courseName: string = ''
 
-  public searchButtonClicked(): void {
-    console.log(this.courseName);
+  public searchButtonClicked(searchValue: string): void {
+    this.searchCourse.emit(searchValue);
   }
 }

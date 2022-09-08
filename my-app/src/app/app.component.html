@@ -1,11 +1,16 @@
 <app-header></app-header>
 <app-breadcrumbs></app-breadcrumbs>
-<app-section></app-section>
-<app-courses
-  *ngFor="let iterCourse of courses; trackBy: trackByFn"
-  [course]="iterCourse"
-  (deleteCourse)="onDeleteCourse($event)"
->
-</app-courses>
-<app-load-more-button></app-load-more-button>
+<app-section (searchCourse)="onSearchCourse($event)"></app-section>
+<ng-container *ngIf="courses && courses.length !== 0">
+  <app-courses
+    *ngFor="let iterCourse of courses | orderBy: 'creationDate'; trackBy: trackByFn"
+    [course]="iterCourse"
+    (deleteCourse)="onDeleteCourse($event)"
+  >
+  </app-courses>
+  <app-load-more-button></app-load-more-button>
+</ng-container>
+<div class="no-data-container" *ngIf="!courses || courses.length === 0">
+  <h3>No data. Feel free to add new course.</h3>
+</div>
 <app-footer></app-footer>

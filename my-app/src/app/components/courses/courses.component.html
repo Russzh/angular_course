@@ -1,9 +1,13 @@
-<div class="courses-container" *ngIf="course">
+<div class="courses-container"
+     *ngIf="course"
+     [appIsCourseFresh]="course.creationDate"
+     [ngClass]="{'top-rated': course.topRated}">
   <div class="title-container">
-    <h3>{{ course.title }}</h3>
+    <h3>{{ course.title | uppercase}}</h3>
+    <i *ngIf="course.topRated" class="fa-solid fa-star"></i>
     <div class="time-container">
       <i class="fa-regular fa-clock"></i>
-      <p class="duration">{{ course.duration | durationHandlerPape }}  </p>
+      <p class="duration">{{ course.duration | durationHandlerPipe }}  </p>
       <i class="fa-regular fa-calendar-days"></i>
       <p class="creationDate">{{ course.creationDate | date:'d LLL yyyy' }}</p>
     </div>

@@ -3,6 +3,10 @@ import {DurationHandlerPipe} from "./duration-handler.pipe";
 describe('DurationHandlerPipe', () => {
   const pipe = new DurationHandlerPipe();
 
+  it('create an instance', (): void => {
+    expect(pipe).toBeTruthy();
+  });
+
   it('should transform 55 to 55 min', () => {
     expect(pipe.transform(55)).toBe('55 min');
   });

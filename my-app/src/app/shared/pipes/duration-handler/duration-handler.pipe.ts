@@ -1,8 +1,9 @@
 import {Pipe, PipeTransform} from "@angular/core";
 
 @Pipe({
-  name: 'durationHandlerPape'
+  name: 'durationHandlerPipe'
 })
+
 export class DurationHandlerPipe implements PipeTransform {
   transform(duration: number): string {
     const MIN_IN_HOUR: number = 60;
