@@ -1,22 +1,14 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {Component} from "@angular/core";
+import {Component, NO_ERRORS_SCHEMA} from "@angular/core";
 
 import {DurationHandlerPipe} from "../../shared";
+
+import {COURSE_DATA} from "../../../assets/mocks/course-data.mock";
 
 import {CoursesComponent} from './courses.component';
 
 let component: CoursesComponent;
-
-const course = {
-  id: 1,
-  title: 'Video Course 1. Name tag',
-  creationDate: new Date(),
-  duration: 88,
-  description: 'Lorem ipsum dolor sit amet, ' +
-    'consectetur adipisicing elit. Aut corporis eaque fugiat itaque laudantium modi, ' +
-    'provident quae quidem tenetur voluptatum.'
-};
 
 describe('CoursesComponent', () => {
   let component: CoursesComponent;
@@ -24,7 +16,8 @@ describe('CoursesComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CoursesComponent]
+      declarations: [CoursesComponent],
+      schemas: [NO_ERRORS_SCHEMA]
     })
       .compileComponents();
 
@@ -61,7 +54,7 @@ describe('Test CoursesComponent using test host', () => {
       </app-courses>`,
   })
   class TestHostComponent {
-    public course = course;
+    public course = COURSE_DATA[0];
 
     public deleteButtonClicked(id: number) {
       console.log(`Course with id ${id} was deleted`)
@@ -70,7 +63,8 @@ describe('Test CoursesComponent using test host', () => {
 
   beforeEach(async () => {
     await TestBed
-      .configureTestingModule({declarations: [CoursesComponent, TestHostComponent, DurationHandlerPipe]})
+      .configureTestingModule({declarations:
+          [CoursesComponent, TestHostComponent, DurationHandlerPipe], schemas: [NO_ERRORS_SCHEMA]})
       .compileComponents();
 
     fixture = TestBed.createComponent(TestHostComponent);
@@ -93,13 +87,14 @@ describe('CoursesComponent as class testing', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [CoursesComponent],
+      schemas: [NO_ERRORS_SCHEMA]
     })
       .compileComponents();
   });
 
   beforeEach(() => {
     component = new CoursesComponent();
-    component.course = course;
+    component.course = COURSE_DATA[0];
     spyOn(console, 'log');
   });
 
@@ -108,7 +103,7 @@ describe('CoursesComponent as class testing', () => {
   });
 
   it('should raise correct param by clicking on Delete btn ', () => {
-    const courseId = 3;
+    const courseId = COURSE_DATA[0].id;
 
     component.deleteCourse = jasmine.createSpyObj('deleteCourse', ['emit']);
     component.deleteButtonClicked(courseId);

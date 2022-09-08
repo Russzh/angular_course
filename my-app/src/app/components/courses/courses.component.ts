@@ -12,7 +12,7 @@ export class CoursesComponent {
   @Input() course: Course | undefined;
   @Output() deleteCourse = new EventEmitter<number>();
 
-  public deleteButtonClicked(value: number) {
+  public deleteButtonClicked(value: number): void {
     this.deleteCourse.emit(value)
   }
 }

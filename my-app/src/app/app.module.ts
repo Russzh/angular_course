@@ -7,9 +7,8 @@ import {CoursesComponent} from './components/courses/courses.component';
 import {HeaderComponent} from './components/header/header.component';
 import {FooterComponent} from './components/footer/footer.component';
 import {BreadcrumbsComponent} from './components/breadcrumbs/breadcrumbs.component';
-import {SectionComponent} from './components/section/section.component';
 import {LoadMoreButtonComponent} from './components/load-more-button/load-more-button.component';
-import {DurationHandlerPipe} from "./shared";
+import {DurationHandlerPipe, OrderByPipe, FilterPipe, IsCourseFreshDirective} from "./shared";
 
 @NgModule({
   declarations: [
@@ -18,9 +17,11 @@ import {DurationHandlerPipe} from "./shared";
     HeaderComponent,
     FooterComponent,
     BreadcrumbsComponent,
-    SectionComponent,
     LoadMoreButtonComponent,
-    DurationHandlerPipe
+    DurationHandlerPipe,
+    OrderByPipe,
+    FilterPipe,
+    IsCourseFreshDirective
   ],
   imports: [
     BrowserModule,

@@ -4,6 +4,10 @@
   border-radius: 20px;
   background-color: white;
 
+  &.top-rated {
+    background: yellowgreen;
+  }
+
   .title-container,
   .time-container,
   .description-container,
@@ -13,6 +17,10 @@
 
   .description-container, .title-container {
     justify-content: space-between;
+  }
+
+  .title-container > .fa-star {
+    width: 15%;
   }
 
   .time-container {
