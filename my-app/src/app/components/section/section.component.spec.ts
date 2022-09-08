@@ -1,6 +1,8 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { SectionComponent } from './section.component';
+import {FormsModule} from "@angular/forms";
+
+import {SectionComponent} from './section.component';
 
 describe('SectionComponent', () => {
   let component: SectionComponent;
@@ -8,9 +10,10 @@ describe('SectionComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SectionComponent ]
+      declarations: [SectionComponent],
+      imports: [FormsModule]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(SectionComponent);
     component = fixture.componentInstance;
@@ -19,5 +22,12 @@ describe('SectionComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should log value of courseName by clicking on search button', () => {
+    const consoleSpy = spyOn(console, 'log');
+    component.searchButtonClicked();
+
+    expect(consoleSpy).toHaveBeenCalledWith(component.courseName);
   });
 });

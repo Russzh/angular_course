@@ -1,31 +1,61 @@
-import { TestBed } from '@angular/core/testing';
-import { AppComponent } from './app.component';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {NO_ERRORS_SCHEMA} from "@angular/core";
+
+import {AppComponent} from './app.component';
+
+import {Course} from "./shared";
+
+import Spy = jasmine.Spy;
 
 describe('AppComponent', () => {
+  let app: AppComponent;
+  let fixture: ComponentFixture<AppComponent>;
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        AppComponent
-      ],
+      declarations: [AppComponent],
+      schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();
+
+    fixture = TestBed.createComponent(AppComponent);
+    app = fixture.componentInstance;
+    fixture.detectChanges();
   });
 
   it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'my-app'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('my-app');
+  it('should log value of courseId by course deleting', () => {
+    const courseID = 3;
+    const consoleSpy: Spy = spyOn(console, 'log');
+
+    app.onDeleteCourse(courseID);
+
+    expect(consoleSpy).toHaveBeenCalledWith(courseID);
   });
 
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('my-app app is running!');
+  it('should have a properly functioning trackBy func that returns correct id', () => {
+    const courseIndex = 3;
+    let course: Course = {
+      id: 1,
+      title: 'Video Course 1. Name tag',
+      creationDate: new Date(),
+      duration: 88,
+      description: 'Lorem ipsum dolor sit amet, ' +
+        'consectetur adipisicing elit. Aut corporis eaque fugiat itaque laudantium modi, ' +
+        'provident quae quidem tenetur voluptatum.'
+    }
+
+    let trackByResult = app.trackByFn(courseIndex, course);
+
+    expect(trackByResult).toBe(course.id);
+  });
+
+  it('should have a correct courses array after rendering a component', () => {
+    app.ngOnInit();
+
+    expect(app.courses).toBeTruthy();
+    expect(app.courses?.length).not.toEqual(0);
   });
 });
