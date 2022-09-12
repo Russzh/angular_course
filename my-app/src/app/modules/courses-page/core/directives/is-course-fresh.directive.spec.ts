@@ -4,7 +4,7 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 import add from "date-fns/add";
 import sub from "date-fns/sub"
 
-import {COURSE_DATA} from "../../../assets/mocks/course-data.mock";
+import {COURSE_DATA} from "@assets/mocks/course-data.mock";
 
 import {IsCourseFreshDirective} from './is-course-fresh.directive';
 

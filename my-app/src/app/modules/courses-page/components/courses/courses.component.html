@@ -1,8 +1,8 @@
-<div class="courses-container"
-     *ngIf="course"
-     [appIsCourseFresh]="course.creationDate"
-     intervalOfActuality="14"
-     [ngClass]="{'top-rated': course.topRated}">
+<main class="courses-container"
+      *ngIf="course"
+      [appIsCourseFresh]="course.creationDate"
+      intervalOfActuality="14"
+      [ngClass]="{'top-rated': course.topRated}">
   <div class="title-container">
     <h3>{{ course.title | uppercase}}</h3>
     <i *ngIf="course.topRated" class="fa-solid fa-star"></i>
@@ -26,5 +26,4 @@
       </button>
     </div>
   </div>
-</div>
-
+</main>

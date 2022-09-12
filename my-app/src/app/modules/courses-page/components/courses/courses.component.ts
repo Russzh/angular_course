@@ -1,6 +1,6 @@
 import {Component, Input, Output, EventEmitter, ChangeDetectionStrategy} from '@angular/core';
 
-import {Course} from "../../shared";
+import {Course} from "@shared/";
 
 @Component({
   selector: 'app-courses',

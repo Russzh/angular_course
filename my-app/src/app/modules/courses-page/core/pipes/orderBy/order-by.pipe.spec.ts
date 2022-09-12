@@ -1,5 +1,6 @@
-import {Course} from "../../types";
-import {COURSE_DATA} from "../../../../assets/mocks/course-data.mock";
+import {COURSE_DATA} from "@assets/mocks/course-data.mock";
+
+import {Course} from "@shared/";
 
 import {OrderByPipe} from './order-by.pipe';
 

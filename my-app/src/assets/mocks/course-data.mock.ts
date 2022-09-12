@@ -1,4 +1,4 @@
-import {Course} from "../../app/shared";
+import {Course} from "@shared/";
 
 export const COURSE_DATA: Course[] = [{
   id: 1,

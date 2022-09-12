@@ -2,9 +2,9 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {Component, NO_ERRORS_SCHEMA} from "@angular/core";
 
-import {DurationHandlerPipe} from "../../shared";
+import {COURSE_DATA} from "@assets/mocks/course-data.mock";
 
-import {COURSE_DATA} from "../../../assets/mocks/course-data.mock";
+import {DurationHandlerPipe} from "../../core";
 
 import {CoursesComponent} from './courses.component';
 
