@@ -2,7 +2,8 @@ import {Component, ChangeDetectionStrategy, OnInit} from '@angular/core';
 
 import {Course} from "@shared/";
 
-import {FilterPipe, CoursesHandlerService} from "./core";
+import {FilterPipe} from "./pipes";
+import {CoursesHandlerService} from "./services/courses-handler.service";
 
 @Component({
   selector: 'app-courses-page',
@@ -32,6 +33,7 @@ export class CoursesPageComponent implements OnInit {
     ) {
       this.currentCourses = this.coursesHandlerService.removeItem(courseId, this.currentCourses);
       this.initialCourses = this.currentCourses;
+      console.log('Course has been deleted successfully')
     }
   }
 

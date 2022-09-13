@@ -16,7 +16,7 @@ export class AuthService {
     this.IsAuthenticated = true;
   }
 
-  private generateToken(): string {
+  public generateToken(): string {
     return Math.random().toString(20).substring(2) + Math.random().toString(20).substring(2);
   }
 

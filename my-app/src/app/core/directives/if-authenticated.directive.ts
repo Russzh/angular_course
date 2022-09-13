@@ -1,17 +1,15 @@
 import {Directive, Input, OnInit, TemplateRef, ViewContainerRef} from '@angular/core';
 
-import {AuthService} from "../../shared/services/auth.service";
-
 @Directive({
-  selector: '[appIfAuthenticated]',
-  providers: [AuthService]
+  selector: '[appIfAuthenticated]'
 })
 
-export class IfAuthenticatedDirective implements OnInit{
-  @Input ('appIfAuthenticated') public isAuthenticated: boolean = false;
+export class IfAuthenticatedDirective implements OnInit {
+  @Input('appIfAuthenticated') public isAuthenticated: boolean = false;
 
   constructor(private view: ViewContainerRef,
-              private template: TemplateRef<any>) { }
+              private template: TemplateRef<any>) {
+  }
 
   ngOnInit(): void {
     if (this.isAuthenticated) {

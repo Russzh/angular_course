@@ -1,25 +1,57 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
-import {NO_ERRORS_SCHEMA} from "@angular/core";
+import {Component, EventEmitter, Input, NO_ERRORS_SCHEMA, Output} from "@angular/core";
 
 import {COURSE_DATA} from "@assets/mocks/course-data.mock";
 
-import {FilterPipe, OrderByPipe} from "./core";
+import {By} from "@angular/platform-browser";
+
+import {FilterPipe, OrderByPipe} from "./pipes";
 
 import {CoursesPageComponent} from './courses-page.component';
+import {CoursesHandlerService} from "./services/courses-handler.service";
+
+import {CoursesComponent} from "./components";
+
+import Spy = jasmine.Spy;
+
+@Component({
+  selector: 'app-courses',
+  template: '',
+})
+class FakeCoursesComponent implements Partial<CoursesComponent> {
+  @Input()
+  public course = COURSE_DATA[0];
+
+  @Output()
+  public deleteCourse = new EventEmitter<number>();
+}
 
 describe('CoursePageComponent', () => {
   let app: CoursesPageComponent;
   let fixture: ComponentFixture<CoursesPageComponent>;
+  let coursesHandlerService: CoursesHandlerService;
+  let coursesComponent: FakeCoursesComponent;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CoursesPageComponent, OrderByPipe, FilterPipe],
+      declarations: [
+        CoursesPageComponent,
+        OrderByPipe,
+        FilterPipe,
+        FakeCoursesComponent
+      ],
       schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();
 
+    coursesHandlerService = TestBed.inject(CoursesHandlerService);
     fixture = TestBed.createComponent(CoursesPageComponent);
     app = fixture.componentInstance;
     fixture.detectChanges();
+
+    const coursesEl = fixture.debugElement.query(
+      By.directive(FakeCoursesComponent)
+    );
+    coursesComponent = coursesEl.componentInstance;
   });
 
   it('should create the app', () => {
@@ -27,11 +59,15 @@ describe('CoursePageComponent', () => {
   });
 
   it('should assign array without one elem by deleting', () => {
-    const courseID = 3;
+    const id = 1;
+    const coursesHandlerSpy: Spy = spyOn(coursesHandlerService, "removeItem");
+    const consoleSpy: Spy = spyOn(console, "log");
 
-    app.onDeleteCourse(courseID);
+    spyOn(window, 'confirm').and.callFake(() => true);
+    coursesComponent.deleteCourse.emit(id);
 
-    expect(app.currentCourses).toEqual(COURSE_DATA.filter(item => item.id !== courseID));
+    expect(consoleSpy).toHaveBeenCalled();
+    expect(coursesHandlerSpy).toHaveBeenCalled();
   });
 
   it('should have a properly functioning trackBy func that returns correct id', () => {

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
 import {COURSE_DATA} from "@assets/mocks/course-data.mock";
 
@@ -9,7 +9,8 @@ import {Course} from "@shared/";
 })
 
 export class CoursesHandlerService {
-  constructor() { }
+  constructor() {
+  }
 
   public getList(): Course[] {
     return COURSE_DATA;

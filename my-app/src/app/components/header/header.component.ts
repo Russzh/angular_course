@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 
-import {AuthService} from "../../shared/services/auth.service";
+import {AuthService} from "@core/services/auth.service";
 
 @Component({
   selector: 'app-header',
@@ -16,6 +16,6 @@ export class HeaderComponent {
 
   public onLogOff (): void {
     this.authService.logout();
-    console.log('Log off successfully', this.authService.IsAuthenticated)
+    console.log('Log off successfully');
   }
 }
