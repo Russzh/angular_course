@@ -3,12 +3,12 @@
     <i class="fa-solid fa-square-caret-right fa-2x"></i>
     <p class="logo-text">VIDEO COURSE</p>
   </div>
-  <div class="buttons-container">
+  <div class="buttons-container" *appIfAuthenticated="isAuthenticated">
     <button class="user-button">
       <i class="fa-solid fa-user"></i>
       <p class="user-name">User login</p>
     </button>
-    <button class="login-button">
+    <button class="login-button" (click)="onLogOff()">
       <i class="fa-solid fa-right-from-bracket"></i>
       <p class="authorization-text">Log off</p>
     </button>

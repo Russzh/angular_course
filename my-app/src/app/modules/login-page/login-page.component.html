@@ -1,0 +1,19 @@
+<main class="login-page-container">
+  <h2>Login</h2>
+  <form class="form-container" #loginForm="ngForm">
+    <div class="email-details-text">
+      <label for="email-input" class="email-label-text">E-mail</label>
+      <p>*required</p>
+    </div>
+    <input [(ngModel)]="email" name="email" type="email" id="email-input" placeholder="Enter a email" required email>
+    <div class="password-details-text">
+      <label for="password-input" class="password-label-text">Password</label>
+      <p>*required</p>
+    </div>
+    <input [(ngModel)]="password" name="password" type="password" id="password-input" placeholder="Enter a password" required>
+    <div class="form-footer-container">
+      <a class="link-text">Forgot password?</a>
+      <button class="login-button" (click)="onLogin(email)" [disabled]="loginForm.invalid">Login</button>
+    </div>
+  </form>
+</main>

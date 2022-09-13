@@ -1,0 +1,75 @@
+:host {
+  display: flex;
+  justify-content: center;
+
+  .login-page-container,
+  .form-container,
+  .email-details-text,
+  .password-details-text,
+  .form-footer-container {
+    display: flex;
+  }
+
+  .login-page-container, .form-container {
+    flex-direction: column;
+  }
+
+  .login-page-container {
+    height: 250px;
+    width: 300px;
+    margin: auto;
+    padding: 25px;
+    border-radius: 10px;
+    background: white;
+
+    .email-label-text, .password-label-text {
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
+    & > h2 {
+      margin-bottom: 20px;
+    }
+
+    .email-details-text, .password-details-text {
+      justify-content: space-between;
+      margin-bottom: 5px;
+
+      & > p {
+        font-size: 10px;
+        color: gray;
+      }
+    }
+
+    #email-input, #password-input {
+      height: 25px;
+      margin-bottom: 15px;
+      padding: 5px;
+      border-radius: 5px;
+    }
+
+    .form-footer-container {
+      justify-content: space-between;
+      margin-top: 15px;
+
+      .link-text {
+        align-self: center;
+        color: #0074D9;
+      }
+
+      .login-button {
+        padding: 10px 15px;
+        background-color: limegreen;
+
+        &[disabled] {
+          background-color: lightgray;
+
+          &:hover {
+            cursor: unset;
+          }
+        }
+      }
+    }
+  }
+}

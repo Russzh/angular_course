@@ -1,5 +1,7 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
+import {IfAuthenticatedDirective} from "../../core/directives/if-authenticated.directive";
+
 import {HeaderComponent} from './header.component';
 
 describe('HeaderComponent', () => {
@@ -8,7 +10,7 @@ describe('HeaderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [HeaderComponent]
+      declarations: [HeaderComponent, IfAuthenticatedDirective]
     })
       .compileComponents();
 

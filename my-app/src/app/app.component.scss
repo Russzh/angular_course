@@ -12,5 +12,9 @@
   app-courses-page {
     flex: 1 1 calc(100vh - (3*$headerHeight));
   }
+
+  app-login-page {
+    flex: 1 1 calc(100vh - (2*$headerHeight))
+  }
 }
 

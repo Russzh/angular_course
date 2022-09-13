@@ -7,8 +7,6 @@ import {FilterPipe, OrderByPipe} from "./core";
 
 import {CoursesPageComponent} from './courses-page.component';
 
-import Spy = jasmine.Spy;
-
 describe('CoursePageComponent', () => {
   let app: CoursesPageComponent;
   let fixture: ComponentFixture<CoursesPageComponent>;
@@ -28,13 +26,12 @@ describe('CoursePageComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it('should log value of courseId by course deleting', () => {
+  it('should assign array without one elem by deleting', () => {
     const courseID = 3;
-    const consoleSpy: Spy = spyOn(console, 'log');
 
     app.onDeleteCourse(courseID);
 
-    expect(consoleSpy).toHaveBeenCalledWith(courseID);
+    expect(app.currentCourses).toEqual(COURSE_DATA.filter(item => item.id !== courseID));
   });
 
   it('should have a properly functioning trackBy func that returns correct id', () => {
@@ -49,8 +46,8 @@ describe('CoursePageComponent', () => {
   it('should have a correct courses-page array after rendering a component', () => {
     app.ngOnInit();
 
-    expect(app.courses).toBeTruthy();
-    expect(app.courses?.length).not.toEqual(0);
+    expect(app.currentCourses).toBeTruthy();
+    expect(app.currentCourses?.length).not.toEqual(0);
   });
 
   describe('onSearchCourse()', () => {
@@ -59,7 +56,7 @@ describe('CoursePageComponent', () => {
 
       app.onSearchCourse(searchValue);
 
-      expect(app.courses?.length).toEqual(1);
+      expect(app.currentCourses?.length).toEqual(1);
     });
 
     it('should assign a full initial array to the courses-page variable if input is empty', () => {
@@ -67,8 +64,8 @@ describe('CoursePageComponent', () => {
 
       app.onSearchCourse(searchValue);
 
-      expect(app.courses).toEqual(COURSE_DATA);
-      expect(app.courses?.length).toBe(COURSE_DATA.length);
+      expect(app.currentCourses).toEqual(COURSE_DATA);
+      expect(app.currentCourses?.length).toBe(COURSE_DATA.length);
     });
   });
 });

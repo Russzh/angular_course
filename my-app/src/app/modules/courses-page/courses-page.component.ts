@@ -1,12 +1,8 @@
 import {Component, ChangeDetectionStrategy, OnInit} from '@angular/core';
 
-import isEqual from "lodash/isEqual";
-
-import {COURSE_DATA} from "@assets/mocks/course-data.mock";
-
 import {Course} from "@shared/";
 
-import {FilterPipe} from "./core";
+import {FilterPipe, CoursesHandlerService} from "./core";
 
 @Component({
   selector: 'app-courses-page',
@@ -16,18 +12,27 @@ import {FilterPipe} from "./core";
   providers: [FilterPipe]
 })
 export class CoursesPageComponent implements OnInit {
-  public courses: Course[] | undefined;
+  public initialCourses: Course[] | undefined;
+  public currentCourses: Course[] | undefined;
   public searchValue: string | undefined;
 
-  constructor(private filter: FilterPipe) {
+  constructor(private filterPipe: FilterPipe,
+              private coursesHandlerService: CoursesHandlerService) {
   }
 
   ngOnInit(): void {
-    this.courses = COURSE_DATA;
+    this.initialCourses = this.coursesHandlerService.getList();
+    this.currentCourses = this.initialCourses;
   }
 
   public onDeleteCourse(courseId: number): void {
-    console.log(courseId);
+    if (confirm(
+        `Are you sure to delete '${this.initialCourses?.find(item => item.id === courseId)?.title}' course`) &&
+      this.currentCourses
+    ) {
+      this.currentCourses = this.coursesHandlerService.removeItem(courseId, this.currentCourses);
+      this.initialCourses = this.currentCourses;
+    }
   }
 
   public trackByFn(index: number, item: Course): number {
@@ -36,10 +41,7 @@ export class CoursesPageComponent implements OnInit {
 
   public onSearchCourse(searchValue: string | undefined): void {
     if (searchValue || searchValue === '') {
-      const searchValueTrimmed: string = searchValue.trim();
-      isEqual(this.courses, COURSE_DATA)
-        ? this.courses = this.filter.transform(this.courses, searchValueTrimmed)
-        : this.courses = this.filter.transform(COURSE_DATA, searchValueTrimmed)
+      this.currentCourses = this.filterPipe.transform(this.initialCourses, searchValue.trim())
     }
   }
 }

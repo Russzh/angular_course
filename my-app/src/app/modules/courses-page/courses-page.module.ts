@@ -3,7 +3,7 @@ import {CommonModule} from '@angular/common';
 import {FormsModule} from "@angular/forms";
 
 import {LoadMoreButtonComponent, CoursesComponent} from "./components";
-import {DurationHandlerPipe, IsCourseFreshDirective, FilterPipe, OrderByPipe} from "./core";
+import {DurationHandlerPipe, IsCourseFreshDirective, FilterPipe, OrderByPipe, CoursesHandlerService} from "./core";
 import {CoursesPageComponent} from "./courses-page.component";
 
 @NgModule({
@@ -11,17 +11,18 @@ import {CoursesPageComponent} from "./courses-page.component";
     CoursesPageComponent,
     CoursesComponent,
     LoadMoreButtonComponent,
-    DurationHandlerPipe,
     IsCourseFreshDirective,
+    DurationHandlerPipe,
     OrderByPipe,
     FilterPipe],
-  exports: [
-    CoursesPageComponent
-  ],
   imports: [
     FormsModule,
     CommonModule
-  ]
+  ],
+  exports: [
+    CoursesPageComponent
+  ],
+  providers: [CoursesHandlerService]
 })
 export class CoursesPageModule {
 }
