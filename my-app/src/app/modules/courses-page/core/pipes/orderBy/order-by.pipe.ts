@@ -2,7 +2,7 @@ import {Pipe, PipeTransform} from '@angular/core';
 
 import orderBy from "lodash/orderBy";
 
-import {Course} from "../../types";
+import {Course} from "@shared/";
 
 @Pipe({
   name: 'orderBy'

@@ -1,9 +1,11 @@
+@import '../../../assets/variables';
+
 :host {
   display: block;
   background-color: white;
 
   .breadcrumb-text {
     margin-left: 10%;
-    line-height: 40px;
+    line-height: $headerHeight;
   }
 }

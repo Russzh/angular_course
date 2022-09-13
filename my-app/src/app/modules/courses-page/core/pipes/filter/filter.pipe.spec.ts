@@ -1,6 +1,6 @@
-import {COURSE_DATA} from "../../../../assets/mocks/course-data.mock";
+import {COURSE_DATA} from "@assets/mocks/course-data.mock";
 
-import {Course} from "../../types";
+import {Course} from "@shared/";
 
 import {FilterPipe} from './filter.pipe';
 
@@ -13,7 +13,7 @@ describe('FilterPipe', () => {
 
   it('should return array that contains correct elems regarding searchValue', () => {
     const elOfMockArr: Course = COURSE_DATA[2];
-    const searchValue: string = elOfMockArr.title.split(' ')[2].toString().substring(0,3);
+    const searchValue: string = elOfMockArr.title.split(' ')[2].toString().substring(0, 3);
 
     expect(pipe.transform(COURSE_DATA, searchValue)?.length).toEqual(1);
     expect(pipe.transform(COURSE_DATA, searchValue)).toEqual([elOfMockArr]);

@@ -1,7 +1,9 @@
+@import '../../../../../assets/variables';
+
 button {
   width: 100%;
   background-color: white;
   border-radius: 20px;
-  line-height: 40px;
+  line-height: $headerHeight;
   text-align: center;
 }
