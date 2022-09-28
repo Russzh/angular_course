@@ -1,6 +1,6 @@
 import {Component, Input, Output, EventEmitter, ChangeDetectionStrategy} from '@angular/core';
 
-import {Course} from "@shared/";
+import {ICourse} from "@shared/";
 
 @Component({
   selector: 'app-courses',
@@ -9,7 +9,7 @@ import {Course} from "@shared/";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CoursesComponent {
-  @Input() course: Course | undefined;
+  @Input() course: ICourse | undefined;
   @Output() deleteCourse = new EventEmitter<number>();
 
   public deleteButtonClicked(value: number): void {

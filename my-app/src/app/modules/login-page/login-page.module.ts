@@ -3,8 +3,6 @@ import {CommonModule} from '@angular/common';
 
 import {FormsModule} from "@angular/forms";
 
-import {AuthService} from "@core/services/auth.service";
-
 import {LoginPageComponent} from "./login-page.component";
 
 @NgModule({
@@ -12,8 +10,7 @@ import {LoginPageComponent} from "./login-page.component";
   imports: [
     CommonModule, FormsModule
   ],
-  exports: [LoginPageComponent],
-  providers: [AuthService]
+  exports: [LoginPageComponent]
 })
 
 export class LoginPageModule {

@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 
 import {AuthService} from "@core/services/auth.service";
 
@@ -8,13 +8,17 @@ import {AuthService} from "@core/services/auth.service";
   styleUrls: ['./header.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HeaderComponent {
-  @Input() public isAuthenticated: boolean = false;
+export class HeaderComponent implements OnInit {
+  public isAuthenticated: boolean = false;
 
   constructor(private authService: AuthService) {
   }
 
-  public onLogOff (): void {
+  ngOnInit() {
+    this.isAuthenticated = this.authService.IsAuthenticated;
+  }
+
+  public onLogOff(): void {
     this.authService.logout();
     console.log('Log off successfully');
   }

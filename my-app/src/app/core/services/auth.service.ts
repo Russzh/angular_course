@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import {ILocalStorageUserInfo} from "@shared/";
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class AuthService {
     this.IsAuthenticated = true;
   }
 
-  public generateToken(): string {
+  private generateToken(): string {
     return Math.random().toString(20).substring(2) + Math.random().toString(20).substring(2);
   }
 
@@ -26,7 +27,7 @@ export class AuthService {
       this.IsAuthenticated = false;
   }
 
-  public getUserInfo() {
+  public getUserInfo(): ILocalStorageUserInfo {
     return {'email': localStorage.getItem('email'), 'token': localStorage.getItem('token')}
   }
 }

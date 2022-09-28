@@ -2,18 +2,21 @@ import {Injectable} from '@angular/core';
 
 import {COURSE_DATA} from "@assets/mocks/course-data.mock";
 
-import {Course} from "@shared/";
+import {ICourse} from "@shared/";
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class CoursesHandlerService {
+  private initialCourses: ICourse[] = COURSE_DATA;
+  private visibleCourses: ICourse[] = structuredClone(this.initialCourses);
+
   constructor() {
   }
 
-  public getList(): Course[] {
-    return COURSE_DATA;
+  public getList(): ICourse[] {
+    return this.visibleCourses;
   }
 
   // public createCourse(properties: Course, arr: Course[]): Course[] {
@@ -21,14 +24,16 @@ export class CoursesHandlerService {
   //   return arr;
   // }
   //
-  // public getItemById(id: number, arr: Course[]): Course | undefined {
-  //   return arr.find(item => item.id === id);
-  // }
+  public getItemById(id: number): ICourse | undefined {
+    return this.visibleCourses.find(item => item.id === id);
+  }
+
   //
   // public updateItem() {
   // }
 
-  public removeItem(id: number, arr: Course[]): Course[] {
-    return arr.filter(item => item.id !== id);
+  public removeItem(id: number): ICourse[] {
+    this.visibleCourses = this.visibleCourses.filter(item => item.id !== id);
+    return this.visibleCourses
   }
 }

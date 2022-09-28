@@ -1,6 +1,8 @@
 import {Component, ChangeDetectionStrategy, OnInit} from '@angular/core';
 
-import {Course} from "@shared/";
+import {ICourse} from "@shared/";
+
+import isEqual from "lodash/isEqual";
 
 import {FilterPipe} from "./pipes";
 import {CoursesHandlerService} from "./services/courses-handler.service";
@@ -13,37 +15,40 @@ import {CoursesHandlerService} from "./services/courses-handler.service";
   providers: [FilterPipe]
 })
 export class CoursesPageComponent implements OnInit {
-  public initialCourses: Course[] | undefined;
-  public currentCourses: Course[] | undefined;
-  public searchValue: string | undefined;
+  public visibleCourses: ICourse[] = [];
+  public searchValue: string = '';
 
   constructor(private filterPipe: FilterPipe,
               private coursesHandlerService: CoursesHandlerService) {
   }
 
   ngOnInit(): void {
-    this.initialCourses = this.coursesHandlerService.getList();
-    this.currentCourses = this.initialCourses;
+    this.visibleCourses = this.coursesHandlerService.getList();
   }
 
   public onDeleteCourse(courseId: number): void {
+    const courseTitle: string | undefined = this.coursesHandlerService.getItemById(courseId)?.title;
+
     if (confirm(
-        `Are you sure to delete '${this.initialCourses?.find(item => item.id === courseId)?.title}' course`) &&
-      this.currentCourses
+      `Are you sure to delete '${courseTitle}' course`) && this.visibleCourses
     ) {
-      this.currentCourses = this.coursesHandlerService.removeItem(courseId, this.currentCourses);
-      this.initialCourses = this.currentCourses;
+      this.visibleCourses = this.coursesHandlerService.removeItem(courseId);
       console.log('Course has been deleted successfully')
     }
   }
 
-  public trackByFn(index: number, item: Course): number {
+  public trackByFn(index: number, item: ICourse): number {
     return item.id;
   }
 
-  public onSearchCourse(searchValue: string | undefined): void {
+  public onSearchCourse(searchValue: string): void {
+    const searchValueTrimmed: string = searchValue.trim();
+    const coursesFromService: ICourse[] = this.coursesHandlerService.getList();
+
     if (searchValue || searchValue === '') {
-      this.currentCourses = this.filterPipe.transform(this.initialCourses, searchValue.trim())
+      isEqual(this.visibleCourses, coursesFromService)
+        ? this.visibleCourses =this.filterPipe.transform(this.visibleCourses, searchValueTrimmed) as Array<ICourse>
+        : this.visibleCourses =this.filterPipe.transform(coursesFromService, searchValueTrimmed) as Array<ICourse>
     }
   }
 }

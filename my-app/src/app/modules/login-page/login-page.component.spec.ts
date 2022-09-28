@@ -3,6 +3,7 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {FormsModule} from "@angular/forms";
 
 import {AuthService} from "@core/services/auth.service";
+import {AuthServiceMock} from "@core/services/auth.service.mock";
 
 import {LoginPageComponent} from './login-page.component';
 
@@ -17,7 +18,7 @@ describe('LoginPageComponent', () => {
     await TestBed.configureTestingModule({
       imports: [FormsModule],
       declarations: [LoginPageComponent],
-      providers: [AuthService]
+      providers: [{provide: AuthService, useClass: AuthServiceMock}]
     })
       .compileComponents();
 

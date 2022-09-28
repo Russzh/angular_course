@@ -1,4 +1,4 @@
-<app-header [isAuthenticated]="isAuthenticated"></app-header>
+<app-header></app-header>
 <app-breadcrumbs *appIfAuthenticated="isAuthenticated"></app-breadcrumbs>
 <app-courses-page *appIfAuthenticated="isAuthenticated"></app-courses-page>
 <app-login-page *appIfAuthenticated="!isAuthenticated"></app-login-page>

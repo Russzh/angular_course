@@ -9,6 +9,7 @@ import {FilterPipe, OrderByPipe} from "./pipes";
 
 import {CoursesPageComponent} from './courses-page.component';
 import {CoursesHandlerService} from "./services/courses-handler.service";
+import {CoursesHandlerServiceMock} from "./services/courses-handler.service.mock";
 
 import {CoursesComponent} from "./components";
 
@@ -40,7 +41,8 @@ describe('CoursePageComponent', () => {
         FilterPipe,
         FakeCoursesComponent
       ],
-      schemas: [NO_ERRORS_SCHEMA]
+      schemas: [NO_ERRORS_SCHEMA],
+      providers: [{provide: CoursesHandlerService, useClass: CoursesHandlerServiceMock}]
     }).compileComponents();
 
     coursesHandlerService = TestBed.inject(CoursesHandlerService);
@@ -82,8 +84,8 @@ describe('CoursePageComponent', () => {
   it('should have a correct courses-page array after rendering a component', () => {
     app.ngOnInit();
 
-    expect(app.currentCourses).toBeTruthy();
-    expect(app.currentCourses?.length).not.toEqual(0);
+    expect(app.visibleCourses).toBeTruthy();
+    expect(app.visibleCourses?.length).not.toEqual(0);
   });
 
   describe('onSearchCourse()', () => {
@@ -92,7 +94,7 @@ describe('CoursePageComponent', () => {
 
       app.onSearchCourse(searchValue);
 
-      expect(app.currentCourses?.length).toEqual(1);
+      expect(app.visibleCourses?.length).toEqual(1);
     });
 
     it('should assign a full initial array to the courses-page variable if input is empty', () => {
@@ -100,8 +102,8 @@ describe('CoursePageComponent', () => {
 
       app.onSearchCourse(searchValue);
 
-      expect(app.currentCourses).toEqual(COURSE_DATA);
-      expect(app.currentCourses?.length).toBe(COURSE_DATA.length);
+      expect(app.visibleCourses).toEqual(COURSE_DATA);
+      expect(app.visibleCourses?.length).toBe(COURSE_DATA.length);
     });
   });
 });
