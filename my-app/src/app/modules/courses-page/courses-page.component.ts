@@ -1,12 +1,11 @@
 import {Component, ChangeDetectionStrategy, OnInit} from '@angular/core';
 
+import {ICourse} from "@shared/";
+
 import isEqual from "lodash/isEqual";
 
-import {COURSE_DATA} from "@assets/mocks/course-data.mock";
-
-import {Course} from "@shared/";
-
-import {FilterPipe} from "./core";
+import {FilterPipe} from "./pipes";
+import {CoursesHandlerService} from "./services/courses-handler.service";
 
 @Component({
   selector: 'app-courses-page',
@@ -16,30 +15,40 @@ import {FilterPipe} from "./core";
   providers: [FilterPipe]
 })
 export class CoursesPageComponent implements OnInit {
-  public courses: Course[] | undefined;
-  public searchValue: string | undefined;
+  public visibleCourses: ICourse[] = [];
+  public searchValue: string = '';
 
-  constructor(private filter: FilterPipe) {
+  constructor(private filterPipe: FilterPipe,
+              private coursesHandlerService: CoursesHandlerService) {
   }
 
   ngOnInit(): void {
-    this.courses = COURSE_DATA;
+    this.visibleCourses = this.coursesHandlerService.getList();
   }
 
   public onDeleteCourse(courseId: number): void {
-    console.log(courseId);
+    const courseTitle: string | undefined = this.coursesHandlerService.getItemById(courseId)?.title;
+
+    if (confirm(
+      `Are you sure to delete '${courseTitle}' course`) && this.visibleCourses
+    ) {
+      this.visibleCourses = this.coursesHandlerService.removeItem(courseId);
+      console.log('Course has been deleted successfully')
+    }
   }
 
-  public trackByFn(index: number, item: Course): number {
+  public trackByFn(index: number, item: ICourse): number {
     return item.id;
   }
 
-  public onSearchCourse(searchValue: string | undefined): void {
+  public onSearchCourse(searchValue: string): void {
+    const searchValueTrimmed: string = searchValue.trim();
+    const coursesFromService: ICourse[] = this.coursesHandlerService.getList();
+
     if (searchValue || searchValue === '') {
-      const searchValueTrimmed: string = searchValue.trim();
-      isEqual(this.courses, COURSE_DATA)
-        ? this.courses = this.filter.transform(this.courses, searchValueTrimmed)
-        : this.courses = this.filter.transform(COURSE_DATA, searchValueTrimmed)
+      isEqual(this.visibleCourses, coursesFromService)
+        ? this.visibleCourses =this.filterPipe.transform(this.visibleCourses, searchValueTrimmed) as Array<ICourse>
+        : this.visibleCourses =this.filterPipe.transform(coursesFromService, searchValueTrimmed) as Array<ICourse>
     }
   }
 }

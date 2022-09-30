@@ -4,7 +4,7 @@ import {Component, NO_ERRORS_SCHEMA} from "@angular/core";
 
 import {COURSE_DATA} from "@assets/mocks/course-data.mock";
 
-import {DurationHandlerPipe} from "../../core";
+import {DurationHandlerPipe} from "../../pipes";
 
 import {CoursesComponent} from './courses.component';
 

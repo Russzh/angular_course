@@ -2,14 +2,14 @@ import {Pipe, PipeTransform} from '@angular/core';
 
 import orderBy from "lodash/orderBy";
 
-import {Course} from "@shared/";
+import {ICourse} from "@shared/";
 
 @Pipe({
   name: 'orderBy'
 })
 
 export class OrderByPipe implements PipeTransform {
-  transform(array: Course[], sortBy: string): Course[] {
+  transform(array: ICourse[], sortBy: string): ICourse[] {
     if (array.length <= 1) {
       return array
     }

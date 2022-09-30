@@ -1,6 +1,6 @@
-import {Course} from "@shared/";
+import {ICourse} from "@shared/";
 
-export const COURSE_DATA: Course[] = [{
+export const COURSE_DATA: ICourse[] = [{
   id: 1,
   title: 'Video Course 1. Name tag',
   creationDate: new Date('2022-08-30'),

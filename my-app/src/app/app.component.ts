@@ -1,4 +1,6 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+
+import {AuthService} from "@core/services/auth.service";
 
 @Component({
   selector: 'app-root',
@@ -7,7 +9,12 @@ import {ChangeDetectionStrategy, Component} from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class AppComponent {
+export class AppComponent implements OnInit{
+  public isAuthenticated: boolean = false;
 
-  constructor() {}
+  constructor(private authService: AuthService) {}
+
+  ngOnInit(): void {
+    this.isAuthenticated = this.authService.IsAuthenticated;
+  }
 }
