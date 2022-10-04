@@ -30,9 +30,11 @@ describe('CoursesHandlerService', () => {
   });
 
   it('should remove course from array and have a length one less by removeItem()', () => {
-    const removeItemResult = service.removeItem(1);
+    const IDToDelete = 1;
+    const removeItemResult = service.removeItem(IDToDelete);
 
     expect(removeItemResult.length).toEqual(COURSE_DATA.length - 1);
     expect(removeItemResult).not.toEqual(COURSE_DATA);
+    expect(removeItemResult.find(item => item.id === IDToDelete)).toBeUndefined();
   });
 });

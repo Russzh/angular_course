@@ -1,12 +1,14 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {Component, NO_ERRORS_SCHEMA} from "@angular/core";
+import {Component, EventEmitter, NO_ERRORS_SCHEMA, Output} from "@angular/core";
 
 import {COURSE_DATA} from "@assets/mocks/course-data.mock";
 
-import {DurationHandlerPipe} from "../../pipes";
+import {DurationHandlerPipe} from "@core/pipes/duration-handler/duration-handler.pipe";
 
 import {CoursesComponent} from './courses.component';
+
+import Spy = jasmine.Spy;
 
 let component: CoursesComponent;
 
@@ -54,10 +56,12 @@ describe('Test CoursesComponent using test host', () => {
       </app-courses>`,
   })
   class TestHostComponent {
+    @Output() deleteCourse = new EventEmitter<number>();
+
     public course = COURSE_DATA[0];
 
     public deleteButtonClicked(id: number) {
-      console.log(`Course with id ${id} was deleted`)
+      this.deleteCourse.emit(id)
     }
   }
 
@@ -74,12 +78,11 @@ describe('Test CoursesComponent using test host', () => {
 
   it('should log correct id param by clicking on delete btn', () => {
     const deleteButtonElement: HTMLElement = fixture.nativeElement.querySelector('.delete-button');
-
-    spyOn(console, 'log');
+    const emitSpy: Spy = spyOn(testHostComponent.deleteCourse, 'emit');
 
     deleteButtonElement.click();
 
-    expect(console.log).toHaveBeenCalledWith('Course with id 1 was deleted');
+    expect(emitSpy).toHaveBeenCalledWith(COURSE_DATA[0].id);
   });
 });
 
@@ -95,7 +98,6 @@ describe('CoursesComponent as class testing', () => {
   beforeEach(() => {
     component = new CoursesComponent();
     component.course = COURSE_DATA[0];
-    spyOn(console, 'log');
   });
 
   it('should create ', () => {

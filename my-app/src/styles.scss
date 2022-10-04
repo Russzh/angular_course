@@ -48,8 +48,14 @@ button {
 
 input {
   padding: 0;
+  border: none;
+  border-radius: 5px;
 }
 
 i {
   margin-right: 5px;
+}
+
+label:hover {
+  cursor: pointer;
 }

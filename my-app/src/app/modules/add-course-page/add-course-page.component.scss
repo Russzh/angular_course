@@ -1,0 +1,95 @@
+:host {
+  display: flex;
+  justify-content: center;
+  width: 60%;
+  margin: auto;
+
+  .add-course-page-container {
+    width: 80%;
+    margin: 45px 0;
+    background-color: white;
+    border-radius: 15px;
+
+    .add-course-page-title, .new-course-form {
+      margin: 20px;
+    }
+
+    .new-course-form {
+      display: flex;
+      flex-direction: column;
+
+      .authors-data-container {
+        width: 50%;
+      }
+
+      .date-data-container {
+        width: 25%;
+      }
+
+      .duration-data-container {
+        .label-container {
+          width: 25%;
+        }
+
+        .duration-input-container {
+          display: flex;
+
+          .duration-input {
+            width: calc(25% - 12px);
+          }
+
+          p {
+            align-self: center;
+            margin-left: 1%;
+          }
+        }
+      }
+
+      .label-container {
+        display: flex;
+        justify-content: space-between;
+
+        & > label {
+          margin: 10px 0;
+          font-weight: bold;
+        }
+
+        & > p {
+          align-self: center;
+          font-size: 10px;
+        }
+      }
+
+      & input, .course-description-textarea {
+        width: calc(100% - 12px);
+        padding: 7px;
+        border-radius: 5px;
+        border: 2px solid lightgray;
+      }
+
+      .course-description-textarea {
+        resize: none;
+      }
+
+      .buttons-container {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 10px;
+
+        .cancel-button, .save-button {
+          width: 10%;
+          padding: 10px;
+        }
+
+        .cancel-button {
+          background-color: lightgray;
+        }
+
+        .save-button {
+          margin-left: 1%;
+          background-color: limegreen;
+        }
+      }
+    }
+  }
+}

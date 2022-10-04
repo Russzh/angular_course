@@ -13,7 +13,6 @@
   .form-container {
     margin-top: 15px;
 
-
     form, .input-container {
       display: inline-flex;
     }
@@ -23,12 +22,8 @@
         background-color: white;
         border-radius: 5px;
 
-        .search-courses-input {
-          border: none;
-          outline: none;
-        }
-
         .search-courses-input, .search-icon {
+          outline: none;
           align-self: center;
           margin-left: 10px;
         }

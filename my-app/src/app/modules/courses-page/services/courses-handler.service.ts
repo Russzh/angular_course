@@ -4,11 +4,19 @@ import {COURSE_DATA} from "@assets/mocks/course-data.mock";
 
 import {ICourse} from "@shared/";
 
+export interface ICoursesHandlerService {
+  getList(): ICourse[];
+
+  getItemById(id: number): ICourse | undefined;
+
+  removeItem(id: number): ICourse[];
+}
+
 @Injectable({
   providedIn: 'root'
 })
 
-export class CoursesHandlerService {
+export class CoursesHandlerService implements ICoursesHandlerService {
   private initialCourses: ICourse[] = COURSE_DATA;
   private visibleCourses: ICourse[] = structuredClone(this.initialCourses);
 

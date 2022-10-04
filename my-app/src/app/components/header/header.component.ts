@@ -8,6 +8,7 @@ import {AuthService} from "@core/services/auth.service";
   styleUrls: ['./header.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
+
 export class HeaderComponent implements OnInit {
   public isAuthenticated: boolean = false;
 
@@ -15,7 +16,7 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.isAuthenticated = this.authService.IsAuthenticated;
+    this.authService.isAuthenticated$.subscribe(value => this.isAuthenticated = value);
   }
 
   public onLogOff(): void {
