@@ -8,9 +8,12 @@ import {CoreModule} from "@core/core.module";
 import {CoursesPageModule} from "../courses-page/courses-page.module";
 
 import {AddCoursePageComponent} from "./add-course-page.component";
+import {WrapperComponent} from './components/wrapper-component/wrapper-component.component';
 
 @NgModule({
-  declarations: [AddCoursePageComponent],
+  declarations: [
+    AddCoursePageComponent,
+    WrapperComponent],
   imports: [
     CommonModule,
     FormsModule,

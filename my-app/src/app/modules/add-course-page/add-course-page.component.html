@@ -1,53 +1,34 @@
 <main class="add-course-page-container">
   <h2 class="add-course-page-title">New course</h2>
   <form [formGroup]="newCourseGroup" class="new-course-form">
-    <div class="title-input-container">
-      <div class="label-container">
-        <label for="course-title">Title:</label>
-        <p>*required</p>
-      </div>
-      <input type="text" class="course-title-input" formControlName="courseTitle" id="course-title">
-    </div>
 
-    <div class="description-data-container">
-      <div class="label-container">
-        <label for="course-description">Description:</label>
-        <p>*required</p>
-      </div>
+    <app-wrapper-component labelText="title">
+      <input type="text" class="course-title-input" formControlName="courseTitle" id="course-title">
+    </app-wrapper-component>
+
+    <app-wrapper-component labelText="description">
       <textarea type="text"
                 class="course-description-textarea"
                 formControlName="courseDescription"
                 rows="5"
                 id="course-description">
       </textarea>
-    </div>
+    </app-wrapper-component>
 
-    <div class="duration-data-container">
-      <div class="label-container">
-        <label for="course-duration">Duration:</label>
-        <p>*required</p>
-      </div>
+    <app-wrapper-component labelText="duration" specificNameContainer=true>
       <div class="duration-input-container">
         <input type="number" class="duration-input" formControlName="courseDuration" id="course-duration">
         <p>{{newCourseGroup.controls['courseDuration'].value | durationHandlerPipe}}</p>
       </div>
-    </div>
+    </app-wrapper-component>
 
-    <div class="date-data-container">
-      <div class="label-container">
-        <label for="course-date">Date:</label>
-        <p>*required</p>
-      </div>
+    <app-wrapper-component labelText="date" specificNameContainer=true>
       <input type="text" class="course-date-input" formControlName="courseDate" id="course-date">
-    </div>
+    </app-wrapper-component>
 
-    <div class="authors-data-container">
-      <div class="label-container">
-        <label for="course-authors">Authors:</label>
-        <p>*required</p>
-      </div>
+    <app-wrapper-component labelText="authors" specificNameContainer=true>
       <input type="text" class="course-authors-input" formControlName="courseAuthors" id="course-authors">
-    </div>
+    </app-wrapper-component>
 
     <div class="buttons-container">
       <button class="cancel-button">Cancel</button>

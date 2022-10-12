@@ -4,8 +4,6 @@ import {ICourse} from "@shared/";
 
 import isEqual from "lodash/isEqual";
 
-import {throwError} from "rxjs";
-
 import {FilterPipe} from "./pipes";
 import {CoursesHandlerService} from "./services/courses-handler.service";
 
@@ -31,14 +29,16 @@ export class CoursesPageComponent implements OnInit {
   public onDeleteCourse(courseId: number): void {
     const foundCourse: ICourse | undefined = this.coursesHandlerService.getItemById(courseId);
 
-    if (foundCourse) {
-      if (confirm(
-        `Are you sure to delete '${foundCourse.title}' course`) && this.visibleCourses
-      ) {
-        this.visibleCourses = this.coursesHandlerService.removeItem(courseId);
-        console.log('Course has been deleted successfully')
-      }
-    } else throwError(() => "Course wasn't found");
+    if (!foundCourse) {
+      console.error("Course wasn't found");
+      return;
+    }
+
+    if (foundCourse
+      && confirm(`Are you sure to delete '${foundCourse.title}' course`)
+    ) {
+      this.visibleCourses = this.coursesHandlerService.removeItem(courseId);
+    }
   }
 
   public trackByFn(index: number, item: ICourse): number {

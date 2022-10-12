@@ -1,10 +1,11 @@
-import {Component} from '@angular/core';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-add-course-page',
   templateUrl: './add-course-page.component.html',
-  styleUrls: ['./add-course-page.component.scss']
+  styleUrls: ['./add-course-page.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AddCoursePageComponent {
   public newCourseGroup: FormGroup = this.formBuilder.group({

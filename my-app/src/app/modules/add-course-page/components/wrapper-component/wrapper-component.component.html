@@ -1,0 +1,7 @@
+<div [ngClass]="specificNameContainer ? labelText+'-data-container' : 'data-container'">
+  <div class="label-container">
+    <label for="course-{{labelText}}">{{labelText | titlecase}}:</label>
+    <p>*required</p>
+  </div>
+  <ng-content></ng-content>
+</div>

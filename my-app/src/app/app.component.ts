@@ -1,6 +1,7 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 
 import {AuthService} from "@core/services/auth.service";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-root',
@@ -9,12 +10,13 @@ import {AuthService} from "@core/services/auth.service";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class AppComponent implements OnInit{
-  public isAuthenticated: boolean = false;
+export class AppComponent implements OnInit {
+  public isAuthenticated$: Observable<boolean> | undefined;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService) {
+  }
 
   ngOnInit(): void {
-    this.authService.isAuthenticated$.subscribe(value => this.isAuthenticated = value);
+    this.isAuthenticated$ = this.authService.isAuthenticated$;
   }
 }

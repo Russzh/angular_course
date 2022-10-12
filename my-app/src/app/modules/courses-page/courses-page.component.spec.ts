@@ -63,12 +63,10 @@ describe('CoursePageComponent', () => {
   it('should assign array without one elem by deleting', () => {
     const id = 1;
     const coursesHandlerSpy: Spy = spyOn(coursesHandlerService, "removeItem");
-    const consoleSpy: Spy = spyOn(console, "log");
 
     spyOn(window, 'confirm').and.callFake(() => true);
     coursesComponent.deleteCourse.emit(id);
-
-    expect(consoleSpy).toHaveBeenCalled();
+    
     expect(coursesHandlerSpy).toHaveBeenCalled();
   });
 

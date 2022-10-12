@@ -1,6 +1,7 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 
 import {AuthService} from "@core/services/auth.service";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-header',
@@ -10,13 +11,13 @@ import {AuthService} from "@core/services/auth.service";
 })
 
 export class HeaderComponent implements OnInit {
-  public isAuthenticated: boolean = false;
+  public isAuthenticated$: Observable<boolean> | undefined;
 
   constructor(private authService: AuthService) {
   }
 
   ngOnInit() {
-    this.authService.isAuthenticated$.subscribe(value => this.isAuthenticated = value);
+    this.isAuthenticated$ = this.authService.isAuthenticated$;
   }
 
   public onLogOff(): void {
