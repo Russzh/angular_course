@@ -3,7 +3,7 @@
     <i class="fa-solid fa-square-caret-right fa-2x"></i>
     <p class="logo-text">VIDEO COURSE</p>
   </div>
-  <div class="buttons-container" *appIfAuthenticated="isAuthenticated">
+  <div class="buttons-container" *appIfAuthenticated="isAuthenticated$ | async">
     <button class="user-button">
       <i class="fa-solid fa-user"></i>
       <p class="user-name">User login</p>

@@ -2,8 +2,10 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from "@angular/forms";
 
+import {CoreModule} from "@core/core.module";
+
 import {LoadMoreButtonComponent, CoursesComponent} from "./components";
-import {DurationHandlerPipe, FilterPipe, OrderByPipe, } from "./pipes";
+import {FilterPipe, OrderByPipe} from "./pipes";
 import {IsCourseFreshDirective} from "./directives/is-course-fresh.directive"
 import {CoursesPageComponent} from "./courses-page.component";
 
@@ -13,12 +15,12 @@ import {CoursesPageComponent} from "./courses-page.component";
     CoursesComponent,
     LoadMoreButtonComponent,
     IsCourseFreshDirective,
-    DurationHandlerPipe,
     OrderByPipe,
     FilterPipe],
   imports: [
     FormsModule,
-    CommonModule
+    CommonModule,
+    CoreModule
   ],
   exports: [
     CoursesPageComponent

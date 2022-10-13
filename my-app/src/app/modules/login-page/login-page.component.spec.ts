@@ -32,14 +32,12 @@ describe('LoginPageComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should call console.log and login method of AuthService by login()', () => {
+  it('should call login method of AuthService by login()', () => {
     const email: string = 'email@gmail.com';
-    const consoleSpy: Spy = spyOn(console, 'log');
     const authServiceSpy: Spy = spyOn(authService, 'login');
 
     component.onLogin(email);
 
     expect(authServiceSpy).toHaveBeenCalledWith(email);
-    expect(consoleSpy).toHaveBeenCalled();
   });
 });

@@ -21,7 +21,7 @@ describe('HeaderComponent', () => {
     })
       .compileComponents();
 
-    authService = TestBed.inject(AuthService)
+    authService = TestBed.inject(AuthService);
     fixture = TestBed.createComponent(HeaderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -31,7 +31,7 @@ describe('HeaderComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should call console.log and logout method of AuthService by onLogOff()', () => {
+  it('should call logout method of AuthService by onLogOff()', () => {
     const logoutAuthSpy: Spy = spyOn(authService, 'logout');
 
     component.onLogOff();

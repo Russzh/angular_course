@@ -5,7 +5,7 @@ import {Directive, Input, OnInit, TemplateRef, ViewContainerRef} from '@angular/
 })
 
 export class IfAuthenticatedDirective implements OnInit {
-  @Input('appIfAuthenticated') public isAuthenticated: boolean = false;
+  @Input('appIfAuthenticated') public isAuthenticated: boolean | null = false;
 
   constructor(private view: ViewContainerRef,
               private template: TemplateRef<any>) {

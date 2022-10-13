@@ -26,8 +26,9 @@ export class IsCourseFreshDirective implements OnChanges {
   private checkCourseForFreshness(courseDate: Date): void {
     if (isAfter(courseDate, currentDate)) {
       this.el.style.border = `${borderSettings} blue`;
-    } else if (isWithinInterval(courseDate, {
-      start: sub(currentDate, {days: Number(this.intervalOfActuality)}), end: currentDate
+    } else if (this.intervalOfActuality && isWithinInterval(courseDate, {
+      start: sub(currentDate, {days: +this.intervalOfActuality}),
+      end: currentDate
     })) {
       this.el.style.border = `${borderSettings} green`;
     }

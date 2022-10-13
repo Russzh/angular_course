@@ -1,13 +1,7 @@
 import {ICourse} from "@shared/*";
 import {COURSE_DATA} from "@assets/mocks/course-data.mock";
 
-interface ICoursesHandlerService {
-  getList(): ICourse[];
-
-  getItemById(): ICourse;
-
-  removeItem(): ICourse[];
-}
+import {ICoursesHandlerService} from "./courses-handler.service";
 
 export class CoursesHandlerServiceMock implements ICoursesHandlerService {
 

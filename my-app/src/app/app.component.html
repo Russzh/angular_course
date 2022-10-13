@@ -1,5 +1,6 @@
 <app-header></app-header>
-<app-breadcrumbs *appIfAuthenticated="isAuthenticated"></app-breadcrumbs>
-<app-courses-page *appIfAuthenticated="isAuthenticated"></app-courses-page>
-<app-login-page *appIfAuthenticated="!isAuthenticated"></app-login-page>
+<app-breadcrumbs *appIfAuthenticated="isAuthenticated$ | async"></app-breadcrumbs>
+<!--<app-courses-page *appIfAuthenticated="isAuthenticated$ | async"></app-courses-page>-->
+<app-login-page *appIfAuthenticated="(isAuthenticated$ | async) === false"></app-login-page>
+<app-add-course-page *appIfAuthenticated="isAuthenticated$ | async"></app-add-course-page>
 <app-footer></app-footer>

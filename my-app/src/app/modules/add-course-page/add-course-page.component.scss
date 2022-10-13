@@ -1,0 +1,42 @@
+:host {
+  display: flex;
+  justify-content: center;
+  width: 60%;
+  margin: auto;
+
+  .add-course-page-container {
+    width: 80%;
+    margin: 45px 0;
+    background-color: white;
+    border-radius: 15px;
+
+    .add-course-page-title, .new-course-form {
+      margin: 20px;
+    }
+
+    .new-course-form {
+      display: flex;
+      flex-direction: column;
+
+      .buttons-container {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 10px;
+
+        .cancel-button, .save-button {
+          width: 10%;
+          padding: 10px;
+        }
+
+        .cancel-button {
+          background-color: lightgray;
+        }
+
+        .save-button {
+          margin-left: 1%;
+          background-color: limegreen;
+        }
+      }
+    }
+  }
+}

@@ -22,12 +22,6 @@
     border-radius: 10px;
     background: white;
 
-    .email-label-text, .password-label-text {
-      &:hover {
-        cursor: pointer;
-      }
-    }
-
     & > h2 {
       margin-bottom: 20px;
     }
@@ -46,7 +40,7 @@
       height: 25px;
       margin-bottom: 15px;
       padding: 5px;
-      border-radius: 5px;
+      border: 2px solid lightgray;
     }
 
     .form-footer-container {

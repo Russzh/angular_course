@@ -9,7 +9,7 @@
     flex: 0 0 $headerHeight;
   }
 
-  app-courses-page {
+  app-courses-page, app-add-course-page {
     flex: 1 1 calc(100vh - (3*$headerHeight));
   }
 

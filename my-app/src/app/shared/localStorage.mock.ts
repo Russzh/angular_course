@@ -2,7 +2,7 @@ interface IStore {
   [key: string]: string;
 }
 
-interface ILocalStorage {
+export interface ILocalStorage {
   getItem(key: string): string,
 
   setItem(key: string, value: string): void,

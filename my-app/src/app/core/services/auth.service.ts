@@ -1,12 +1,23 @@
 import {Injectable} from '@angular/core';
 import {ILocalStorageUserInfo} from "@shared/";
+import {BehaviorSubject} from "rxjs";
+
+export interface IAuthService {
+  isAuthenticated$: BehaviorSubject<boolean>;
+
+  login(email: string): void,
+
+  logout(): void,
+
+  getUserInfo(): ILocalStorageUserInfo;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 
-export class AuthService {
-  public IsAuthenticated: boolean = true;
+export class AuthService implements IAuthService {
+  public isAuthenticated$: BehaviorSubject<boolean> = new BehaviorSubject(true);
 
   constructor() {
   }
@@ -14,7 +25,7 @@ export class AuthService {
   public login(email: string): void {
     localStorage.setItem('email', email);
     localStorage.setItem('token', this.generateToken());
-    this.IsAuthenticated = true;
+    this.isAuthenticated$.next(true);
   }
 
   private generateToken(): string {
@@ -22,9 +33,9 @@ export class AuthService {
   }
 
   public logout(): void {
-      localStorage.removeItem('email');
-      localStorage.removeItem('token');
-      this.IsAuthenticated = false;
+    localStorage.removeItem('email');
+    localStorage.removeItem('token');
+    this.isAuthenticated$.next(false);
   }
 
   public getUserInfo(): ILocalStorageUserInfo {

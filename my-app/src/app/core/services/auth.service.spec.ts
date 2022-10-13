@@ -1,53 +1,68 @@
-import {TestBed} from '@angular/core/testing';
+import {fakeAsync, TestBed} from '@angular/core/testing';
 
 import {localStorageMock} from "@shared/*";
+
+import {BehaviorSubject} from "rxjs";
 
 import {AuthService} from './auth.service';
 
 describe('AuthServiceService', () => {
   let service: AuthService;
+  let copiedLocalStorage: Storage;
+  let isAuthenticated: boolean;
+  const EMAIL: string = 'email@gmail.com';
 
-  Object.defineProperty(window, "localStorage", {value: localStorageMock});
+  beforeAll(() => {
+    copiedLocalStorage = Object.assign({}, localStorage);
+    Object.defineProperty(window, "localStorage", {value: localStorageMock});
+  });
 
   beforeEach(() => {
-    window.localStorage.clear();
     TestBed.configureTestingModule({});
     service = TestBed.inject(AuthService);
   });
+
+  afterAll(() => Object.defineProperty(window, "localStorage", {value: copiedLocalStorage}));
 
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should call generateToken(), ' +
-    'assign true to IsAuthenticated variable, have email and token values in localStorage by login', () => {
-    const email: string = 'email@gmail.com';
-    spyOn<any>(service, 'generateToken');
+  it('should have a correct email value as string in localStorage by login', () => {
+    service.login(EMAIL);
+    const emailValue: string | null = localStorage.getItem('email');
 
-    service.login(email);
-
-    expect(localStorage.getItem('email')).toEqual(email);
-    expect(service['generateToken']).toHaveBeenCalled();
-    expect(service.IsAuthenticated).toBeTruthy();
+    expect(emailValue).toEqual(EMAIL);
+    expect(emailValue).toEqual(EMAIL);
   });
 
-  it('should return string at least 20 characters long by calling generateToken()', () => {
-    const result = service['generateToken']();
+  it('should have a correct token value as string ' +
+    'and at least 20 characters long in localStorage by login', () => {
+    service.login(EMAIL);
+    const tokenValue: string | null = localStorage.getItem('token');
 
-    expect(typeof result).toBe('string');
-    expect(result.length).toBeGreaterThan(20);
+    expect(localStorage.getItem('email')).toEqual(EMAIL);
+    expect(tokenValue).toBeTruthy();
+    expect(tokenValue?.length).toBeGreaterThan(20);
+    expect(typeof tokenValue).toBe('string');
   });
 
-  it('should remove email and token fields from localStorage ' +
-    'and assign false to the IsAuthenticated by logout', () => {
-    const email: string = 'email@gmail.com';
+  it('should assign true to isAuthenticated$ variable', () => {
+    service.login(EMAIL);
 
-    service.IsAuthenticated = true;
-    service.login(email);
+    expect(service.isAuthenticated$).toBeTruthy();
+  });
+
+  it('should remove email, token fields from localStorage ' +
+    'and return false value by isAuthenticated$ observable by logout', fakeAsync(() => {
+    service.isAuthenticated$ = new BehaviorSubject<boolean>(true);
+
+    service.login(EMAIL);
     service.logout();
+    service.isAuthenticated$.subscribe(value => isAuthenticated = value);
 
     expect(localStorage.getItem('email')).toBeUndefined();
     expect(localStorage.getItem('token')).toBeUndefined();
-    expect(service.IsAuthenticated).toBeFalse();
-  });
+    expect(isAuthenticated).toBeFalsy();
+  }));
 });

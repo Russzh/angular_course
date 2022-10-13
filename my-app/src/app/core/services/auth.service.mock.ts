@@ -1,15 +1,10 @@
 import {ILocalStorageUserInfo} from "@shared/";
-
-interface IAuthService {
-  login(): void,
-
-  logout(): void,
-
-  getUserInfo(): ILocalStorageUserInfo;
-}
+import {BehaviorSubject} from "rxjs";
+import {IAuthService} from "@core/services/auth.service";
 
 export class AuthServiceMock implements IAuthService {
-  private tokenString: string = 'sssfjn28295wsfssfnfsf092425f';
+  public tokenString: string = 'sssfjn28295wsfssfnfsf092425f';
+  public isAuthenticated$: BehaviorSubject<boolean> = new BehaviorSubject(true);
 
   public login(): void {
   }

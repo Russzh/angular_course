@@ -7,7 +7,7 @@ import {ICourse} from "@shared/";
 })
 
 export class FilterPipe implements PipeTransform {
-  transform(array: ICourse[] | undefined, searchValue: string): ICourse[] | undefined {
+  transform(array: ICourse[], searchValue: string): ICourse[] {
     const searchUCVal: string = searchValue.toUpperCase();
 
     return array?.filter((item => item.title.toUpperCase().includes(searchUCVal)))

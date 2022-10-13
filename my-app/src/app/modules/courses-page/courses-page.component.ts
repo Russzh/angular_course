@@ -27,13 +27,17 @@ export class CoursesPageComponent implements OnInit {
   }
 
   public onDeleteCourse(courseId: number): void {
-    const courseTitle: string | undefined = this.coursesHandlerService.getItemById(courseId)?.title;
+    const foundCourse: ICourse | undefined = this.coursesHandlerService.getItemById(courseId);
 
-    if (confirm(
-      `Are you sure to delete '${courseTitle}' course`) && this.visibleCourses
+    if (!foundCourse) {
+      console.error("Course wasn't found");
+      return;
+    }
+
+    if (foundCourse
+      && confirm(`Are you sure to delete '${foundCourse.title}' course`)
     ) {
       this.visibleCourses = this.coursesHandlerService.removeItem(courseId);
-      console.log('Course has been deleted successfully')
     }
   }
 
@@ -47,8 +51,8 @@ export class CoursesPageComponent implements OnInit {
 
     if (searchValue || searchValue === '') {
       isEqual(this.visibleCourses, coursesFromService)
-        ? this.visibleCourses =this.filterPipe.transform(this.visibleCourses, searchValueTrimmed) as Array<ICourse>
-        : this.visibleCourses =this.filterPipe.transform(coursesFromService, searchValueTrimmed) as Array<ICourse>
+        ? this.visibleCourses = this.filterPipe.transform(this.visibleCourses, searchValueTrimmed)
+        : this.visibleCourses = this.filterPipe.transform(coursesFromService, searchValueTrimmed)
     }
   }
 }
