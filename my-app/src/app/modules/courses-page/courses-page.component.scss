@@ -1,9 +1,13 @@
 @import '../../../assets/variables';
 
 :host {
-  display: block;
-  width: 80%;
-  margin: auto;
+  min-height: calc(100vh - 2 * $headerHeight);
+
+  main {
+    display: block;
+    width: 80%;
+    margin: auto;
+  }
 
   app-courses, app-load-more-button, .no-data-container {
     display: block;

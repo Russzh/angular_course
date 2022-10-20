@@ -11,8 +11,13 @@ import {ICourse} from "@shared/";
 export class CoursesComponent {
   @Input() course: ICourse | undefined;
   @Output() deleteCourse = new EventEmitter<number>();
+  @Output() editCourse = new EventEmitter<ICourse>();
 
-  public deleteButtonClicked(value: number): void {
-    this.deleteCourse.emit(value)
+  public deleteButtonClicked(id: number): void {
+    this.deleteCourse.emit(id)
+  }
+
+  public editButtonClicked(course: ICourse): void {
+    this.editCourse.emit(course)
   }
 }

@@ -10,7 +10,7 @@ const borderSettings: string = '3px solid';
 
 export class IsCourseFreshDirective implements OnChanges {
   @Input('appIsCourseFresh') public courseDate: Date | undefined;
-  @Input() public intervalOfActuality: string | undefined;
+  @Input() public intervalOfActuality: string = '';
 
   constructor(private element: ElementRef) {
   }

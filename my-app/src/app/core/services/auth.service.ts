@@ -17,10 +17,7 @@ export interface IAuthService {
 })
 
 export class AuthService implements IAuthService {
-  public isAuthenticated$: BehaviorSubject<boolean> = new BehaviorSubject(true);
-
-  constructor() {
-  }
+  public isAuthenticated$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   public login(email: string): void {
     localStorage.setItem('email', email);

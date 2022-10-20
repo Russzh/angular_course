@@ -16,12 +16,16 @@
   .logo-container {
     margin-left: 10%;
 
+    &:hover {
+      cursor: pointer;
+    }
+
     .logo-text {
       align-self: center;
     }
   }
 
   .buttons-container {
-    margin-right: 5%;
+    margin-right: 10%;
   }
 }

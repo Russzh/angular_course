@@ -1,12 +1,14 @@
+@import '../../../../../assets/variables';
+
 :host {
-  display: flex;
-  justify-content: center;
-  width: 60%;
-  margin: auto;
+  min-height: calc(100vh - 2 * $headerHeight);
 
   .add-course-page-container {
-    width: 80%;
-    margin: 45px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: auto;
+    width: 40%;
     background-color: white;
     border-radius: 15px;
 

@@ -1,8 +1,12 @@
-import {Component, ChangeDetectionStrategy, OnInit} from '@angular/core';
+import {Component, ChangeDetectionStrategy, OnInit, OnDestroy} from '@angular/core';
 
 import {ICourse} from "@shared/";
 
-import isEqual from "lodash/isEqual";
+import {ActivatedRoute, Router} from "@angular/router";
+
+import {isEqual} from "lodash";
+
+import {Subscription} from "rxjs";
 
 import {FilterPipe} from "./pipes";
 import {CoursesHandlerService} from "./services/courses-handler.service";
@@ -14,16 +18,33 @@ import {CoursesHandlerService} from "./services/courses-handler.service";
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [FilterPipe]
 })
-export class CoursesPageComponent implements OnInit {
+export class CoursesPageComponent implements OnInit, OnDestroy {
   public visibleCourses: ICourse[] = [];
   public searchValue: string = '';
 
+  private _subscriptions$: Subscription = new Subscription();
+  private existingCourses: ICourse[] = [];
+
   constructor(private filterPipe: FilterPipe,
-              private coursesHandlerService: CoursesHandlerService) {
+              private coursesHandlerService: CoursesHandlerService,
+              private route: ActivatedRoute,
+              private router: Router) {
   }
 
   ngOnInit(): void {
-    this.visibleCourses = this.coursesHandlerService.getList();
+    this.getListOfCourses();
+  }
+
+  ngOnDestroy(): void {
+    this._subscriptions$?.unsubscribe();
+  }
+
+  private getListOfCourses(): void {
+    this._subscriptions$.add(this.coursesHandlerService.getList()
+      .subscribe(existingCourses => {
+        this.visibleCourses = structuredClone(existingCourses);
+        this.existingCourses = structuredClone(existingCourses);
+      }));
   }
 
   public onDeleteCourse(courseId: number): void {
@@ -37,8 +58,12 @@ export class CoursesPageComponent implements OnInit {
     if (foundCourse
       && confirm(`Are you sure to delete '${foundCourse.title}' course`)
     ) {
-      this.visibleCourses = this.coursesHandlerService.removeItem(courseId);
+      this.coursesHandlerService.removeItem(courseId);
     }
+  }
+
+  public onEditCourse(course: ICourse): void {
+    this.router.navigate(["/courses", course.id]);
   }
 
   public trackByFn(index: number, item: ICourse): number {
@@ -47,12 +72,15 @@ export class CoursesPageComponent implements OnInit {
 
   public onSearchCourse(searchValue: string): void {
     const searchValueTrimmed: string = searchValue.trim();
-    const coursesFromService: ICourse[] = this.coursesHandlerService.getList();
 
     if (searchValue || searchValue === '') {
-      isEqual(this.visibleCourses, coursesFromService)
+      isEqual(this.visibleCourses, this.existingCourses)
         ? this.visibleCourses = this.filterPipe.transform(this.visibleCourses, searchValueTrimmed)
-        : this.visibleCourses = this.filterPipe.transform(coursesFromService, searchValueTrimmed)
+        : this.visibleCourses = this.filterPipe.transform(this.existingCourses, searchValueTrimmed)
     }
+  }
+
+  public onAddCourse(): void {
+    this.router.navigate(['/courses/new'])
   }
 }

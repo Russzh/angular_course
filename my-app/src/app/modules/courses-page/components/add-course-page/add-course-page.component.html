@@ -1,15 +1,16 @@
+<app-breadcrumbs [subRoute]="subRoute"></app-breadcrumbs>
 <main class="add-course-page-container">
   <h2 class="add-course-page-title">New course</h2>
   <form [formGroup]="newCourseGroup" class="new-course-form">
 
     <app-wrapper-component labelText="title">
-      <input type="text" class="course-title-input" formControlName="courseTitle" id="course-title">
+      <input type="text" class="course-title-input" formControlName="title" id="course-title">
     </app-wrapper-component>
 
     <app-wrapper-component labelText="description">
       <textarea type="text"
                 class="course-description-textarea"
-                formControlName="courseDescription"
+                formControlName="description"
                 rows="5"
                 id="course-description">
       </textarea>
@@ -17,22 +18,22 @@
 
     <app-wrapper-component labelText="duration" specificNameContainer=true>
       <div class="duration-input-container">
-        <input type="number" class="duration-input" formControlName="courseDuration" id="course-duration">
-        <p>{{newCourseGroup.controls['courseDuration'].value | durationHandlerPipe}}</p>
+        <input type="number" class="duration-input" formControlName="duration" id="course-duration">
+        <p>{{newCourseGroup.controls['duration'].value | durationHandlerPipe}}</p>
       </div>
     </app-wrapper-component>
 
     <app-wrapper-component labelText="date" specificNameContainer=true>
-      <input type="text" class="course-date-input" formControlName="courseDate" id="course-date">
+      <input type="text" class="course-date-input" formControlName="creationDate" id="course-date">
     </app-wrapper-component>
 
     <app-wrapper-component labelText="authors" specificNameContainer=true>
-      <input type="text" class="course-authors-input" formControlName="courseAuthors" id="course-authors">
+      <input type="text" class="course-authors-input" formControlName="authors" id="course-authors">
     </app-wrapper-component>
 
     <div class="buttons-container">
-      <button class="cancel-button">Cancel</button>
-      <button class="save-button">Save</button>
+      <button class="cancel-button" (click)="cancelButtonClicked()">Cancel</button>
+      <button class="save-button" (click)="saveButtonClicked(this.newCourseGroup.value)">Save</button>
     </div>
   </form>
 </main>
