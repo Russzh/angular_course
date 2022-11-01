@@ -1,115 +1,106 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
-
-import {Component, EventEmitter, NO_ERRORS_SCHEMA, Output} from "@angular/core";
+import {Component, EventEmitter, Input, NO_ERRORS_SCHEMA, Output} from "@angular/core";
 
 import {COURSE_DATA} from "@assets/mocks/course-data.mock";
 
-import {DurationHandlerPipe} from "@core/pipes/duration-handler/duration-handler.pipe";
+import {By} from "@angular/platform-browser";
+
+import {FilterPipe, OrderByPipe} from "../../pipes";
+
+import {CoursesHandlerService} from "../../services/courses-handler.service";
+import {CoursesHandlerServiceMock} from "../../services/courses-handler.service.mock";
 
 import {CoursesComponent} from './courses.component';
 
 import Spy = jasmine.Spy;
 
-let component: CoursesComponent;
+@Component({
+  selector: 'app-course-item',
+  template: '',
+})
+class FakeCoursesComponent implements Partial<CoursesComponent> {
+  @Input()
+  public course = COURSE_DATA[0];
 
-describe('CoursesComponent', () => {
-  let component: CoursesComponent;
+  @Output()
+  public deleteCourse = new EventEmitter<number>();
+}
+
+describe('CoursePageComponent', () => {
+  let app: CoursesComponent;
   let fixture: ComponentFixture<CoursesComponent>;
+  let coursesHandlerService: CoursesHandlerService;
+  let coursesComponent: FakeCoursesComponent;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CoursesComponent],
-      schemas: [NO_ERRORS_SCHEMA]
-    })
-      .compileComponents();
+      declarations: [
+        CoursesComponent,
+        OrderByPipe,
+        FilterPipe,
+        FakeCoursesComponent
+      ],
+      schemas: [NO_ERRORS_SCHEMA],
+      providers: [{provide: CoursesHandlerService, useClass: CoursesHandlerServiceMock}]
+    }).compileComponents();
 
+    coursesHandlerService = TestBed.inject(CoursesHandlerService);
     fixture = TestBed.createComponent(CoursesComponent);
-    component = fixture.componentInstance;
+    app = fixture.componentInstance;
     fixture.detectChanges();
+
+    const coursesEl = fixture.debugElement.query(
+      By.directive(FakeCoursesComponent)
+    );
+    coursesComponent = coursesEl.componentInstance;
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('should create the app', () => {
+    expect(app).toBeTruthy();
   });
 
-  it('should raise correct param by clicking on Delete btn', () => {
-    const courseId = 3;
+  it('should assign array without one elem by deleting', () => {
+    const id = 1;
+    const coursesHandlerSpy: Spy = spyOn(coursesHandlerService, "removeItem");
 
-    component.deleteCourse.subscribe((id) => {
-      expect(id).toBe(courseId);
+    spyOn(window, 'confirm').and.callFake(() => true);
+    coursesComponent.deleteCourse.emit(id);
+
+    expect(coursesHandlerSpy).toHaveBeenCalled();
+  });
+
+  it('should have a properly functioning trackBy func that returns correct id', () => {
+    const courseIndex = 3;
+    let course = COURSE_DATA[0];
+
+    let trackByResult = app.trackByFn(courseIndex, course);
+
+    expect(trackByResult).toBe(course.id);
+  });
+
+  it('should have a correct course-item-page array after rendering a component', () => {
+    app.ngOnInit();
+
+    expect(app.visibleCourses).toBeTruthy();
+    expect(app.visibleCourses?.length).not.toEqual(0);
+  });
+
+  describe('onSearchCourse()', () => {
+    it('should assign a correct array to the course-item-page variable if there is valid searchValue string', () => {
+      const searchValue = 'Course 1';
+
+      app.onSearchCourse(searchValue);
+
+      expect(app.visibleCourses?.length).toEqual(1);
     });
 
-    component.deleteButtonClicked(courseId);
-  });
-});
+    it('should assign a full initial array to the course-item-page variable if input is empty', () => {
+      const searchValue = '';
 
-describe('Test CoursesComponent using test host', () => {
-  let testHostComponent: TestHostComponent;
-  let fixture: ComponentFixture<TestHostComponent>;
+      app.onSearchCourse(searchValue);
 
-  // Create test host component for courses-item element
-  @Component({
-    template: `
-      <app-courses
-        [course]="course"
-        (deleteCourse)="deleteButtonClicked($event)">
-      </app-courses>`,
-  })
-  class TestHostComponent {
-    @Output() deleteCourse = new EventEmitter<number>();
-
-    public course = COURSE_DATA[0];
-
-    public deleteButtonClicked(id: number) {
-      this.deleteCourse.emit(id)
-    }
-  }
-
-  beforeEach(async () => {
-    await TestBed
-      .configureTestingModule({declarations:
-          [CoursesComponent, TestHostComponent, DurationHandlerPipe], schemas: [NO_ERRORS_SCHEMA]})
-      .compileComponents();
-
-    fixture = TestBed.createComponent(TestHostComponent);
-    testHostComponent = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should log correct id param by clicking on delete btn', () => {
-    const deleteButtonElement: HTMLElement = fixture.nativeElement.querySelector('.delete-button');
-    const emitSpy: Spy = spyOn(testHostComponent.deleteCourse, 'emit');
-
-    deleteButtonElement.click();
-
-    expect(emitSpy).toHaveBeenCalledWith(COURSE_DATA[0].id);
-  });
-});
-
-describe('CoursesComponent as class testing', () => {
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [CoursesComponent],
-      schemas: [NO_ERRORS_SCHEMA]
-    })
-      .compileComponents();
-  });
-
-  beforeEach(() => {
-    component = new CoursesComponent();
-    component.course = COURSE_DATA[0];
-  });
-
-  it('should create ', () => {
-    expect(component).toBeTruthy();
-  });
-
-  it('should raise correct param by clicking on Delete btn ', () => {
-    const courseId = COURSE_DATA[0].id;
-
-    component.deleteCourse = jasmine.createSpyObj('deleteCourse', ['emit']);
-    component.deleteButtonClicked(courseId);
-
-    expect(component.deleteCourse.emit).toHaveBeenCalledWith(courseId);
+      expect(app.visibleCourses).toEqual(COURSE_DATA);
+      expect(app.visibleCourses?.length).toBe(COURSE_DATA.length);
+    });
   });
 });

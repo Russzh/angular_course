@@ -24,9 +24,18 @@
       "dom"
     ],
     "paths": {
-      "@assets/*": ["assets/*"],
-      "@shared/*": ["app/shared"],
-      "@core/*": ["app/core/*"]
+      "@assets/*": [
+        "assets/*"
+      ],
+      "@shared/*": [
+        "app/shared"
+      ],
+      "@core/*": [
+        "app/core/*"
+      ],
+      "@modules/*": [
+        "app/modules/"
+      ]
     }
   },
   "angularCompilerOptions": {

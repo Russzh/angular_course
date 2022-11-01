@@ -1,1 +1,7 @@
-<p class="breadcrumb-text">Course {{additionalText}}</p>
+<div class="breadcrumb-labels">
+  <span *ngFor="let breadcrumb of breadcrumbs$ | async; first as first, last as last">
+      <a [routerLink]="breadcrumb.url" routerLinkActive="current-router-link">
+        {{last && last !== first ? separator + breadcrumb.label : breadcrumb.label}}
+      </a>
+  </span>
+</div>

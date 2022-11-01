@@ -1,6 +1,5 @@
-<app-breadcrumbs [subRoute]="subRoute"></app-breadcrumbs>
-<main class="add-course-page-container">
-  <h2 class="add-course-page-title">New course</h2>
+<ng-container *ngIf="newCourseGroup">
+  <h2 class="form-title">New course</h2>
   <form [formGroup]="newCourseGroup" class="new-course-form">
 
     <app-wrapper-component labelText="title">
@@ -32,8 +31,10 @@
     </app-wrapper-component>
 
     <div class="buttons-container">
-      <button class="cancel-button" (click)="cancelButtonClicked()">Cancel</button>
-      <button class="save-button" (click)="saveButtonClicked(this.newCourseGroup.value)">Save</button>
+      <button class="cancel-button" [routerLink]="['/courses']">Cancel</button>
+      <button class="save-button" (click)="saveButtonClicked(this.newCourseGroup.value)" [routerLink]="['/courses']">
+        Save
+      </button>
     </div>
   </form>
-</main>
+</ng-container>

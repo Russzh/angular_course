@@ -1,21 +1,14 @@
 import {NgModule} from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
 
 import {IfAuthenticatedDirective} from '@core/directives/if-authenticated.directive';
 import {DurationHandlerPipe} from "@core/pipes/duration-handler/duration-handler.pipe";
 
-import {BreadcrumbsComponent} from "../components";
-
 @NgModule({
   declarations: [
     IfAuthenticatedDirective,
-    DurationHandlerPipe,
-    BreadcrumbsComponent
+    DurationHandlerPipe
   ],
-  imports: [
-    BrowserModule
-  ],
-  exports: [IfAuthenticatedDirective, DurationHandlerPipe, BreadcrumbsComponent],
+  exports: [IfAuthenticatedDirective, DurationHandlerPipe],
 })
 export class CoreModule {
 }

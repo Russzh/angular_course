@@ -1,52 +1,33 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {FormsModule} from "@angular/forms";
 
 import {CoreModule} from "@core/core.module";
 
-import {RouterModule, Routes} from "@angular/router";
+import {RouterModule} from "@angular/router";
 
+import {AddCoursePageModule, CoursePageRoutingModule} from "@modules/*";
 
-import {AddCoursePageComponent} from "./components/add-course-page/add-course-page.component";
-
-import {LoadMoreButtonComponent, CoursesComponent} from "./components";
+import {LoadMoreButtonComponent, CoursesComponent, CourseItemComponent} from "./components";
 import {FilterPipe, OrderByPipe} from "./pipes";
 import {IsCourseFreshDirective} from "./directives/is-course-fresh.directive"
 import {CoursesPageComponent} from "./courses-page.component";
-import {WrapperComponent} from "./components/wrapper-component/wrapper-component.component";
-
-const routes: Routes = [
-  {
-    path: "courses",
-    pathMatch: "full",
-    component: CoursesPageComponent,
-  },
-  {
-    path: "courses/:id",
-    component: AddCoursePageComponent,
-  },
-  {
-    path: "courses/new",
-    component: AddCoursePageComponent,
-  }
-]
 
 @NgModule({
   declarations: [
     CoursesPageComponent,
-    CoursesComponent,
+    CourseItemComponent,
     LoadMoreButtonComponent,
-    AddCoursePageComponent,
-    WrapperComponent,
     IsCourseFreshDirective,
     OrderByPipe,
-    FilterPipe],
+    FilterPipe,
+    CoursesComponent],
   imports: [
+    CoursePageRoutingModule,
     FormsModule,
     CommonModule,
     CoreModule,
-    ReactiveFormsModule,
-    RouterModule.forChild(routes),
+    AddCoursePageModule
   ],
   exports: [
     CoursesPageComponent,

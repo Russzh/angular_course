@@ -1,22 +1,20 @@
-import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
-import {ActivatedRoute, Router} from "@angular/router";
-import {Subscription} from "rxjs";
+import {filter, map, Observable, Subscription} from "rxjs";
+import {ActivatedRoute, ParamMap, Router} from "@angular/router";
 
 import {ICourse} from "@shared/*";
-
+import {isNull, negate} from "lodash";
 import {format} from "date-fns";
 
-import {CoursesHandlerService} from "../../services/courses-handler.service";
+import {CoursesHandlerService} from "../courses-page/services/courses-handler.service";
 
 @Component({
   selector: 'app-add-course-page',
   templateUrl: './add-course-page.component.html',
   styleUrls: ['./add-course-page.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AddCoursePageComponent implements OnInit, OnDestroy {
-  public subRoute: string = '';
   public newCourseGroup: FormGroup = this.formBuilder.group({
     title: ['title'],
     description: ['description'],
@@ -24,6 +22,10 @@ export class AddCoursePageComponent implements OnInit, OnDestroy {
     creationDate: ['MM/DD/YYYY'],
     authors: ['Start typing']
   });
+
+  private subRoute$: Observable<string | null> = this.activatedRoute.paramMap.pipe(
+    map((params: ParamMap) => params.get('id')));
+
   private _subscriptions$: Subscription = new Subscription();
 
   constructor(private formBuilder: FormBuilder,
@@ -33,19 +35,15 @@ export class AddCoursePageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.handleRouteParam();
+    this._subscriptions$.add(this.handleRouteParam());
   }
 
   ngOnDestroy(): void {
     this._subscriptions$.unsubscribe();
   }
 
-  cancelButtonClicked(): void {
-    this.router.navigate(['/courses']);
-  }
-
-  saveButtonClicked(courseData: ICourse): void {
-    if (this.activatedRoute.snapshot.url[1]?.path === 'new') {
+  onSaveCourse(courseData: ICourse) {
+    if (this.activatedRoute.snapshot.routeConfig?.path === 'new') {
       this.courseHandlerService.createCourse(
         {
           ...courseData,
@@ -54,7 +52,7 @@ export class AddCoursePageComponent implements OnInit, OnDestroy {
           topRated: false
         });
     } else {
-      const courseId: number = +this.activatedRoute.snapshot.url[1]?.path;
+      const courseId: number = +this.activatedRoute.snapshot.params['id'];
       this.courseHandlerService.updateItem(
         {
           ...courseData,
@@ -63,27 +61,21 @@ export class AddCoursePageComponent implements OnInit, OnDestroy {
           topRated: this.courseHandlerService.getItemById(courseId)!.topRated
         });
     }
-
-    this.router.navigate(['/courses']);
   }
 
-  private handleRouteParam(): void {
-    this._subscriptions$.add(this.activatedRoute.params
-      .subscribe(params => {
-        const subRoute: string = params['id'];
-        const courseForEditing: ICourse | undefined = this.courseHandlerService.getItemById(+subRoute);
-
-        if (courseForEditing) {
-          this.newCourseGroup.patchValue({
-            title: courseForEditing.title,
-            description: courseForEditing.description,
-            duration: courseForEditing.duration,
-            creationDate: format(courseForEditing.creationDate, 'MM/dd/yyyy')
-          })
-        }
-
-        this.subRoute = subRoute;
-      }));
+  private handleRouteParam(): Subscription {
+    return this.subRoute$.pipe(
+      map((subRoute: string | null) => typeof subRoute === 'string'
+        ? this.courseHandlerService.getItemById(+subRoute)
+        : null),
+      filter(negate(isNull))).subscribe((courseForEditing) => {
+        this.newCourseGroup.patchValue({
+          title: courseForEditing.title,
+          description: courseForEditing.description,
+          duration: courseForEditing.duration,
+          creationDate: format(courseForEditing.creationDate, 'MM/dd/yyyy')
+        });
+      }
+    );
   }
 }
-

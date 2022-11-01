@@ -1,5 +1,5 @@
 <header class="header-container">
-  <div class="logo-container" (click)="onLogoClick()">
+  <div class="logo-container" routerLink="/courses">
     <i class="fa-solid fa-square-caret-right fa-2x"></i>
     <span class="logo-text">VIDEO COURSES</span>
   </div>
@@ -8,7 +8,7 @@
       <i class="fa-solid fa-user"></i>
       <p class="user-name">{{userName | titlecase}}</p>
     </button>
-    <button class="login-button" *appIfAuthenticated="currentRoute !== '/login'" (click)="onLogInLogOff()">
+    <button class="login-button" *appIfAuthenticated="(currentRoute$ | async) !== '/login'" (click)="onLogInLogOff()">
       <i class="fa-solid fa-right-from-bracket"></i>
       <p class="authorization-text">{{isAuthenticated ? 'Log Off' : 'Log in'}}</p>
     </button>
