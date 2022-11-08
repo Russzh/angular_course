@@ -31,8 +31,9 @@
     </app-wrapper-component>
 
     <div class="buttons-container">
-      <button class="cancel-button" [routerLink]="['/courses']">Cancel</button>
-      <button class="save-button" (click)="saveButtonClicked(this.newCourseGroup.value)" [routerLink]="['/courses']">
+      <button class="cancel-button" type="button" [routerLink]="['/courses']">Cancel</button>
+      <button class="save-button" type="submit" (click)="saveButtonClicked(this.newCourseGroup.value)"
+              [routerLink]="['/courses']">
         Save
       </button>
     </div>

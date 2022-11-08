@@ -11,7 +11,7 @@ const routes: Routes = [
     path: 'courses',
     component: CoursesPageComponent,
     title: 'All courses',
-    data: {breadcrumbTitle: 'Course'},
+    data: {breadcrumbTitle: 'Courses'},
     children: [
       {
         path: '',

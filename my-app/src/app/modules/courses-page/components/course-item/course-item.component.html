@@ -1,7 +1,6 @@
 <main class="courses-container"
       *ngIf="course"
       [appIsCourseFresh]="course.creationDate"
-      intervalOfActuality="14"
       [ngClass]="{'top-rated': course.topRated}">
   <div class="title-container">
     <h3>{{ course.title | uppercase}}</h3>

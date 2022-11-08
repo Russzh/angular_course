@@ -1,6 +1,6 @@
-import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {NavigationEnd, Router} from "@angular/router";
-import {filter, Subscription, tap} from "rxjs";
+import {filter, map, Observable} from "rxjs";
 import {Event} from '@angular/router';
 
 @Component({
@@ -10,27 +10,17 @@ import {Event} from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class AppComponent implements OnInit, OnDestroy {
-  public navigationEndEvent: NavigationEnd | undefined;
-
-  private _subscriptions$: Subscription = new Subscription();
+export class AppComponent {
+  public navigationEndEvent$: Observable<Boolean> = this.router.events
+    .pipe(
+      filter((event: Event): event is NavigationEnd => event instanceof NavigationEnd),
+      map((event: NavigationEnd) => {
+        return event.url !== '/login'
+          && event.url !== '/not-found-page'
+          && event.urlAfterRedirects !== '/not-found-page';
+      })
+    );
 
   constructor(private router: Router) {
-  }
-
-  ngOnInit(): void {
-    this._subscriptions$.add(this.subscribeNavigationEndEvent());
-  }
-
-  private subscribeNavigationEndEvent(): Subscription {
-    return this.router.events
-      .pipe(
-        filter((event: Event): event is NavigationEnd => event instanceof NavigationEnd),
-        tap(navigationEndEvent => this.navigationEndEvent = navigationEndEvent),
-      ).subscribe();
-  }
-
-  ngOnDestroy() {
-    this._subscriptions$.unsubscribe();
   }
 }

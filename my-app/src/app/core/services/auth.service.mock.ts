@@ -4,7 +4,7 @@ import {IAuthService} from "@core/services/auth.service";
 
 export class AuthServiceMock implements IAuthService {
   public tokenString: string = 'sssfjn28295wsfssfnfsf092425f';
-  public isAuthenticated$: BehaviorSubject<boolean> = new BehaviorSubject(true);
+  public isAuthenticated$$: BehaviorSubject<boolean> = new BehaviorSubject(true);
 
   public login(): void {
   }

@@ -1,6 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 
-import {filter, map, Observable, of, startWith} from "rxjs";
+import {filter, map, Observable, startWith} from "rxjs";
 import {ActivatedRoute, Event, NavigationEnd, Router} from "@angular/router";
 
 import {IBreadcrumbs} from "./breadcrumb.model";
@@ -11,21 +11,17 @@ import {IBreadcrumbs} from "./breadcrumb.model";
   styleUrls: ['./breadcrumbs.component.scss'],
 })
 
-export class BreadcrumbsComponent implements OnInit {
-  public breadcrumbs$: Observable<IBreadcrumbs[]> = of([]);
+export class BreadcrumbsComponent {
+  public breadcrumbs$: Observable<IBreadcrumbs[]> = this.router.events
+    .pipe(
+      filter((event: Event): event is NavigationEnd => event instanceof NavigationEnd),
+      startWith(this.router),
+      map(() => this.createBreadcrumbs())
+    );
 
-  @Input() separator: string = '';
+  @Input() separator?: string = ' / ';
 
   constructor(private activatedRoute: ActivatedRoute, private router: Router) {
-  }
-
-  ngOnInit(): void {
-    this.breadcrumbs$ = this.router.events
-      .pipe(
-        filter((event: Event): event is NavigationEnd => event instanceof NavigationEnd),
-        startWith(this.router),
-        map(() => this.createBreadcrumbs())
-      );
   }
 
   private createBreadcrumbs(): IBreadcrumbs[] {

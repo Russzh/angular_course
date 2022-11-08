@@ -3,7 +3,7 @@ import {ILocalStorageUserInfo} from "@shared/";
 import {BehaviorSubject} from "rxjs";
 
 export interface IAuthService {
-  isAuthenticated$: BehaviorSubject<boolean>;
+  isAuthenticated$$: BehaviorSubject<boolean>;
 
   login(email: string): void,
 
@@ -17,12 +17,12 @@ export interface IAuthService {
 })
 
 export class AuthService implements IAuthService {
-  public isAuthenticated$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  public isAuthenticated$$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   public login(email: string): void {
     localStorage.setItem('email', email);
     localStorage.setItem('token', this.generateToken());
-    this.isAuthenticated$.next(true);
+    this.isAuthenticated$$.next(true);
   }
 
   private generateToken(): string {
@@ -32,10 +32,10 @@ export class AuthService implements IAuthService {
   public logout(): void {
     localStorage.removeItem('email');
     localStorage.removeItem('token');
-    this.isAuthenticated$.next(false);
+    this.isAuthenticated$$.next(false);
   }
 
   public getUserInfo(): ILocalStorageUserInfo {
-    return {'email': localStorage.getItem('email'), 'token': localStorage.getItem('token')}
+    return {'email': localStorage.getItem('email')?.trim(), 'token': localStorage.getItem('token')}
   }
 }

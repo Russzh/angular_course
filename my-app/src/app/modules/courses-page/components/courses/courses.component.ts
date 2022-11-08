@@ -50,9 +50,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
       return;
     }
 
-    if (foundCourse
-      && confirm(`Are you sure to delete '${foundCourse.title}' course`)
-    ) {
+    if (confirm(`Are you sure to delete '${foundCourse.title}' course`)) {
       this.coursesHandlerService.removeItem(courseId);
     }
   }
@@ -62,12 +60,8 @@ export class CoursesComponent implements OnInit, OnDestroy {
   }
 
   public onSearchCourse(searchValue: string): void {
-    const searchValueTrimmed: string = searchValue.trim();
-
-    if (searchValue || searchValue === '') {
-      isEqual(this.visibleCourses, this.existingCourses)
-        ? this.visibleCourses = this.filterPipe.transform(this.visibleCourses, searchValueTrimmed)
-        : this.visibleCourses = this.filterPipe.transform(this.existingCourses, searchValueTrimmed)
+    if (!(searchValue === '' && isEqual(this.visibleCourses, this.existingCourses))) {
+      this.visibleCourses = this.filterPipe.transform(this.existingCourses, searchValue.trim())
     }
   }
 }

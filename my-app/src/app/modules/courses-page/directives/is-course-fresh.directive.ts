@@ -10,7 +10,7 @@ const borderSettings: string = '3px solid';
 
 export class IsCourseFreshDirective implements OnChanges {
   @Input('appIsCourseFresh') public courseDate: Date | undefined;
-  @Input() public intervalOfActuality: string = '';
+  @Input() public intervalOfActuality?: number = 14;
 
   constructor(private element: ElementRef) {
   }
@@ -26,8 +26,8 @@ export class IsCourseFreshDirective implements OnChanges {
   private checkCourseForFreshness(courseDate: Date): void {
     if (isAfter(courseDate, currentDate)) {
       this.el.style.border = `${borderSettings} blue`;
-    } else if (this.intervalOfActuality && isWithinInterval(courseDate, {
-      start: sub(currentDate, {days: +this.intervalOfActuality}),
+    } else if (isWithinInterval(courseDate, {
+      start: sub(currentDate, {days: this.intervalOfActuality}),
       end: currentDate
     })) {
       this.el.style.border = `${borderSettings} green`;

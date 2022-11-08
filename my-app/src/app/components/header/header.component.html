@@ -6,7 +6,7 @@
   <div class="buttons-container">
     <button class="user-button" *appIfAuthenticated="isAuthenticated">
       <i class="fa-solid fa-user"></i>
-      <p class="user-name">{{userName | titlecase}}</p>
+      <p class="user-name">{{userName$ | async | titlecase}}</p>
     </button>
     <button class="login-button" *appIfAuthenticated="(currentRoute$ | async) !== '/login'" (click)="onLogInLogOff()">
       <i class="fa-solid fa-right-from-bracket"></i>

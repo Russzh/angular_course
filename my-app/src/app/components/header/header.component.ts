@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 
 import {AuthService} from "@core/services/auth.service";
 import {Event, NavigationEnd, Router} from "@angular/router";
-import {filter, map, Observable, of, Subscription, tap} from "rxjs";
+import {filter, map, Observable, Subscription} from "rxjs";
 
 @Component({
   selector: 'app-header',
@@ -12,8 +12,24 @@ import {filter, map, Observable, of, Subscription, tap} from "rxjs";
 
 export class HeaderComponent implements OnInit, OnDestroy {
   public isAuthenticated: boolean | undefined;
-  public currentRoute$: Observable<string> = of('');
-  public userName: string | null = '';
+
+  public currentRoute$: Observable<string> = this.router.events
+    .pipe(
+      filter((event: Event): event is NavigationEnd => event instanceof NavigationEnd),
+      map((event: NavigationEnd): string => event.url)
+    );
+
+  public userName$: Observable<string | null> = this.authService.isAuthenticated$$
+    .pipe(
+      filter((isAuth: boolean) => isAuth),
+      map((): string | null => {
+        const email: string | undefined = this.authService.getUserInfo().email;
+        if (email) {
+          return email.substring(0, email.indexOf('@'));
+        }
+        console.error("email wasn't found");
+        return null;
+      }));
 
   private _subscriptions$: Subscription = new Subscription();
 
@@ -21,42 +37,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this._subscriptions$.add(this.changeUserName());
-    this.handleRouteEvents();
+    this._subscriptions$
+      .add(this.authService.isAuthenticated$$.subscribe(isAuth => this.isAuthenticated = isAuth));
   }
 
   ngOnDestroy(): void {
     this._subscriptions$.unsubscribe();
-  }
-
-  private changeUserName(): Subscription {
-    return this.authService.isAuthenticated$
-      .pipe(
-        tap((isAuth: boolean) => this.isAuthenticated = isAuth),
-        filter((isAuth: boolean) => isAuth),
-        map((): string | null => {
-          const email: string | undefined = this.authService.getUserInfo().email?.trim();
-          if (email) {
-            this.userName = email.substring(0, email.indexOf('@'));
-            return email.substring(0, email.indexOf('@'));
-          }
-          return null;
-        })
-      )
-      .subscribe((userName: string | null): void => {
-          if (userName) {
-            this.userName = userName
-          }
-        }
-      )
-  }
-
-  private handleRouteEvents(): void {
-    this.currentRoute$ = this.router.events
-      .pipe(
-        filter((event: Event): event is NavigationEnd => event instanceof NavigationEnd),
-        map((event: NavigationEnd): string => event.url)
-      );
   }
 
   public onLogInLogOff(): void {

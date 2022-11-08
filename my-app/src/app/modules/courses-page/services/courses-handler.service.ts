@@ -3,10 +3,10 @@ import {Injectable} from '@angular/core';
 import {COURSE_DATA} from "@assets/mocks/course-data.mock";
 
 import {ICourse} from "@shared/";
-import {BehaviorSubject} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 
 export interface ICoursesHandlerService {
-  getList(): BehaviorSubject<ICourse[]>;
+  getList(): Observable<ICourse[]>;
 
   getItemById(id: number): ICourse | undefined;
 
@@ -18,33 +18,32 @@ export interface ICoursesHandlerService {
 })
 
 export class CoursesHandlerService implements ICoursesHandlerService {
-  private existingCourses$: BehaviorSubject<ICourse[]> = new BehaviorSubject(structuredClone(COURSE_DATA));
+  private existingCourses$$: BehaviorSubject<ICourse[]> = new BehaviorSubject(structuredClone(COURSE_DATA));
+  private existingCourses: ICourse[] = structuredClone(this.existingCourses$$.getValue());
 
-  public getList(): BehaviorSubject<ICourse[]> {
-    return this.existingCourses$;
+  public getList(): Observable<ICourse[]> {
+    return this.existingCourses$$.asObservable();
   }
 
   public createCourse(courseData: ICourse): void {
-    let copiedCourses: ICourse[] = structuredClone(this.existingCourses$.getValue());
+    this.existingCourses.push(courseData);
 
-    copiedCourses.push(courseData);
-
-    this.existingCourses$.next(copiedCourses);
+    this.existingCourses$$.next(this.existingCourses);
   }
 
   public getItemById(id: number): ICourse | undefined {
-    return this.existingCourses$.getValue().find((item: ICourse) => item.id === id);
+    return this.existingCourses.find((item: ICourse) => item.id === id);
   }
 
   public updateItem(courseData: ICourse): void {
-    const copiedCourses: ICourse[] = structuredClone(this.existingCourses$.getValue());
+    this.existingCourses = this.existingCourses.map(item => item.id === courseData.id ? courseData : item)
 
-    this.existingCourses$.next(copiedCourses.map(item => item.id === courseData.id ? courseData : item));
+    this.existingCourses$$.next(this.existingCourses);
   }
 
   public removeItem(id: number): void {
-    const updatedCourses: ICourse[] = this.existingCourses$.getValue().filter((item: ICourse) => item.id !== id);
+    this.existingCourses = this.existingCourses.filter((item: ICourse) => item.id !== id);
 
-    this.existingCourses$.next(updatedCourses);
+    this.existingCourses$$.next(this.existingCourses);
   }
 }

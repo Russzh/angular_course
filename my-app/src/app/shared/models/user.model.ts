@@ -5,6 +5,6 @@ export interface IUser {
 }
 
 export interface ILocalStorageUserInfo {
-  email: string | null;
+  email: string | undefined;
   token: string | null;
 }
