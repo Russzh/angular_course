@@ -5,15 +5,31 @@
       <label for="email-input" class="email-label-text">E-mail</label>
       <p>*required</p>
     </div>
-    <input [(ngModel)]="email" name="email" type="email" id="email-input" placeholder="Enter a email" required email>
+    <input [(ngModel)]="email"
+           name="email"
+           type="email"
+           id="email-input"
+           placeholder="Enter a email"
+           required
+           email>
     <div class="password-details-text">
       <label for="password-input" class="password-label-text">Password</label>
       <p>*required</p>
     </div>
-    <input [(ngModel)]="password" name="password" type="password" id="password-input" placeholder="Enter a password" required>
+    <input [(ngModel)]="password"
+           name="password"
+           type="password"
+           id="password-input"
+           placeholder="Enter a password"
+           required>
     <div class="form-footer-container">
       <a class="link-text">Forgot password?</a>
-      <button class="login-button" (click)="onLogin(email)" [disabled]="loginForm.invalid">Login</button>
+      <button class="login-button"
+              (click)="onLogin(email)"
+              [routerLink]="['/courses']"
+              [disabled]="loginForm.invalid">
+        Login
+      </button>
     </div>
   </form>
 </main>

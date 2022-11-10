@@ -1,0 +1,41 @@
+<ng-container *ngIf="newCourseGroup">
+  <h2 class="form-title">New course</h2>
+  <form [formGroup]="newCourseGroup" class="new-course-form">
+
+    <app-wrapper-component labelText="title">
+      <input type="text" class="course-title-input" formControlName="title" id="course-title">
+    </app-wrapper-component>
+
+    <app-wrapper-component labelText="description">
+      <textarea type="text"
+                class="course-description-textarea"
+                formControlName="description"
+                rows="5"
+                id="course-description">
+      </textarea>
+    </app-wrapper-component>
+
+    <app-wrapper-component labelText="duration" specificNameContainer=true>
+      <div class="duration-input-container">
+        <input type="number" class="duration-input" formControlName="duration" id="course-duration">
+        <p>{{newCourseGroup.controls['duration'].value | durationHandlerPipe}}</p>
+      </div>
+    </app-wrapper-component>
+
+    <app-wrapper-component labelText="date" specificNameContainer=true>
+      <input type="text" class="course-date-input" formControlName="creationDate" id="course-date">
+    </app-wrapper-component>
+
+    <app-wrapper-component labelText="authors" specificNameContainer=true>
+      <input type="text" class="course-authors-input" formControlName="authors" id="course-authors">
+    </app-wrapper-component>
+
+    <div class="buttons-container">
+      <button class="cancel-button" type="button" [routerLink]="['/courses']">Cancel</button>
+      <button class="save-button" type="submit" (click)="saveButtonClicked(this.newCourseGroup.value)"
+              [routerLink]="['/courses']">
+        Save
+      </button>
+    </div>
+  </form>
+</ng-container>

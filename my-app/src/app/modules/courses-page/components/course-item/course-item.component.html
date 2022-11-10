@@ -1,0 +1,31 @@
+<main class="courses-container"
+      *ngIf="course"
+      [appIsCourseFresh]="course.creationDate"
+      [ngClass]="{'top-rated': course.topRated}">
+  <div class="title-container">
+    <h3>{{ course.title | uppercase}}</h3>
+    <i *ngIf="course.topRated" class="fa-solid fa-star"></i>
+    <div class="time-container">
+      <i class="fa-regular fa-clock"></i>
+      <p class="duration">{{ course.duration | durationHandlerPipe }}</p>
+      <i class="fa-regular fa-calendar-days"></i>
+      <p class="creationDate">{{ course.creationDate | date:'d LLL yyyy' }}</p>
+    </div>
+  </div>
+  <div class="description-container">
+    <p class="description-text">
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+      Amet aspernatur ex fuga labore laboriosam numquam ratione
+      reprehenderit sequi sit veniam.
+    </p>
+    <div class="buttons-container">
+      <button class="edit-button" [routerLink]="['/courses', course.id]">
+        <i class="fa-solid fa-pencil"></i>
+        Edit
+      </button>
+      <button class="delete-button" (click)="deleteButtonClicked(course.id)">
+        <i class="fa-solid fa-trash"></i> Delete
+      </button>
+    </div>
+  </div>
+</main>

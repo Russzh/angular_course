@@ -1,27 +1,51 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 
 import {AuthService} from "@core/services/auth.service";
-import {Observable} from "rxjs";
+import {Event, NavigationEnd, Router} from "@angular/router";
+import {filter, map, Observable, Subscription} from "rxjs";
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./header.component.scss']
 })
 
-export class HeaderComponent implements OnInit {
-  public isAuthenticated$: Observable<boolean> | undefined;
+export class HeaderComponent implements OnInit, OnDestroy {
+  public isAuthenticated: boolean | undefined;
 
-  constructor(private authService: AuthService) {
+  public currentRoute$: Observable<string> = this.router.events
+    .pipe(
+      filter((event: Event): event is NavigationEnd => event instanceof NavigationEnd),
+      map((event: NavigationEnd): string => event.url)
+    );
+
+  public userName$: Observable<string | null> = this.authService.isAuthenticated$$
+    .pipe(
+      filter((isAuth: boolean) => isAuth),
+      map((): string | null => {
+        const email: string | undefined = this.authService.getUserInfo().email;
+        if (email) {
+          return email.substring(0, email.indexOf('@'));
+        }
+        console.error("email wasn't found");
+        return null;
+      }));
+
+  private _subscriptions$: Subscription = new Subscription();
+
+  constructor(private authService: AuthService, private router: Router) {
   }
 
-  ngOnInit() {
-    this.isAuthenticated$ = this.authService.isAuthenticated$;
+  ngOnInit(): void {
+    this._subscriptions$
+      .add(this.authService.isAuthenticated$$.subscribe(isAuth => this.isAuthenticated = isAuth));
   }
 
-  public onLogOff(): void {
-    this.authService.logout();
-    console.log('Log off successfully');
+  ngOnDestroy(): void {
+    this._subscriptions$.unsubscribe();
+  }
+
+  public onLogInLogOff(): void {
+    this.isAuthenticated ? this.authService.logout() : this.router.navigate(['login/'])
   }
 }

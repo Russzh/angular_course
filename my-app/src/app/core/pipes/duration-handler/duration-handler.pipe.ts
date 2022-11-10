@@ -16,7 +16,7 @@ export class DurationHandlerPipe implements PipeTransform {
         ? handledDuration = `${Math.floor(divisionOfDuration)} h ${remainderOfDivision} min`
         : handledDuration = `${divisionOfDuration} h`
     } else {
-      handledDuration = `${duration} min`
+      handledDuration = duration ? `${duration} min` : ''
     }
     return handledDuration
   }

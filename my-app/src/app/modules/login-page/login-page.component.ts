@@ -18,6 +18,5 @@ export class LoginPageComponent {
 
   public onLogin(email: string): void {
     this.authService.login(email);
-    console.log("Logged in successfully")
   }
 }

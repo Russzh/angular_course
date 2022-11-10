@@ -8,6 +8,6 @@ import {ChangeDetectionStrategy, Component, Input, ViewEncapsulation} from '@ang
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class WrapperComponent {
-  @Input() public labelText: string | undefined;
-  @Input() public specificNameContainer: string | undefined;
+  @Input() public labelText: string = '';
+  @Input() public specificNameContainer: string = '';
 }

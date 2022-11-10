@@ -1,1 +1,21 @@
-<p class="breadcrumb-text">Courses</p>
+<div class="breadcrumb-labels" *ngIf="breadcrumbs$ | async as breadcrumbs">
+  <ng-container
+    *ngTemplateOutlet="breadcrumbs.length === 1
+    ? oneBreadcrumb
+    : someBreadcrumbs; context {$implicit: breadcrumbs} ">
+  </ng-container>
+</div>
+
+<ng-template #oneBreadcrumb let-breadcrumbs>
+  <a [routerLink]="breadcrumbs[0].url" routerLinkActive="current-router-link">
+    {{breadcrumbs[0].label}}
+  </a>
+</ng-template>
+
+<ng-template #someBreadcrumbs let-breadcrumbs>
+  <span *ngFor="let breadcrumb of breadcrumbs; first as first">
+      <a [routerLink]="breadcrumb.url" routerLinkActive="current-router-link">
+        {{!first ? separator + breadcrumb.label : breadcrumb.label}}
+      </a>
+  </span>
+</ng-template>

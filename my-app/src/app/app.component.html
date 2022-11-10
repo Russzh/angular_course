@@ -1,6 +1,7 @@
 <app-header></app-header>
-<app-breadcrumbs *appIfAuthenticated="isAuthenticated$ | async"></app-breadcrumbs>
-<!--<app-courses-page *appIfAuthenticated="isAuthenticated$ | async"></app-courses-page>-->
-<app-login-page *appIfAuthenticated="(isAuthenticated$ | async) === false"></app-login-page>
-<app-add-course-page *appIfAuthenticated="isAuthenticated$ | async"></app-add-course-page>
+<app-breadcrumbs
+  *ngIf="navigationEndEvent$ | async"
+  separator=" > ">
+</app-breadcrumbs>
+<router-outlet></router-outlet>
 <app-footer></app-footer>

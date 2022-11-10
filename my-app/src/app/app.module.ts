@@ -3,23 +3,30 @@ import {BrowserModule} from '@angular/platform-browser';
 
 import {CoreModule} from "@core/core.module";
 
+import {RouterModule} from "@angular/router";
+
+import {CoursesPageModule, LoginPageModule} from "@modules/*";
+
 import {AppComponent} from './app.component';
-import {BreadcrumbsComponent, HeaderComponent, FooterComponent} from './components';
-import {AddCoursePageModule, CoursesPageModule, LoginPageModule} from "./modules";
+import {HeaderComponent, FooterComponent, BreadcrumbsComponent} from './components';
+import {AppRoutingModule} from "./app-routing.module";
+import {PageNotFoundComponent} from './components/page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    BreadcrumbsComponent,
     HeaderComponent,
     FooterComponent,
-    BreadcrumbsComponent
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
     CoursesPageModule,
     LoginPageModule,
-    AddCoursePageModule,
-    CoreModule
+    CoreModule,
+    RouterModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

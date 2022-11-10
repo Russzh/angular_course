@@ -3,13 +3,14 @@ import {Injectable} from '@angular/core';
 import {COURSE_DATA} from "@assets/mocks/course-data.mock";
 
 import {ICourse} from "@shared/";
+import {BehaviorSubject, Observable} from "rxjs";
 
 export interface ICoursesHandlerService {
-  getList(): ICourse[];
+  getList(): Observable<ICourse[]>;
 
   getItemById(id: number): ICourse | undefined;
 
-  removeItem(id: number): ICourse[];
+  removeItem(id: number): void;
 }
 
 @Injectable({
@@ -17,31 +18,32 @@ export interface ICoursesHandlerService {
 })
 
 export class CoursesHandlerService implements ICoursesHandlerService {
-  private initialCourses: ICourse[] = COURSE_DATA;
-  private visibleCourses: ICourse[] = structuredClone(this.initialCourses);
+  private existingCourses$$: BehaviorSubject<ICourse[]> = new BehaviorSubject(structuredClone(COURSE_DATA));
+  private existingCourses: ICourse[] = structuredClone(this.existingCourses$$.getValue());
 
-  constructor() {
+  public getList(): Observable<ICourse[]> {
+    return this.existingCourses$$.asObservable();
   }
 
-  public getList(): ICourse[] {
-    return this.visibleCourses;
+  public createCourse(courseData: ICourse): void {
+    this.existingCourses.push(courseData);
+
+    this.existingCourses$$.next(this.existingCourses);
   }
 
-  // public createCourse(properties: Course, arr: Course[]): Course[] {
-  //   arr.push(properties);
-  //   return arr;
-  // }
-  //
   public getItemById(id: number): ICourse | undefined {
-    return this.visibleCourses.find(item => item.id === id);
+    return this.existingCourses.find((item: ICourse) => item.id === id);
   }
 
-  //
-  // public updateItem() {
-  // }
+  public updateItem(courseData: ICourse): void {
+    this.existingCourses = this.existingCourses.map(item => item.id === courseData.id ? courseData : item)
 
-  public removeItem(id: number): ICourse[] {
-    this.visibleCourses = this.visibleCourses.filter(item => item.id !== id);
-    return this.visibleCourses
+    this.existingCourses$$.next(this.existingCourses);
+  }
+
+  public removeItem(id: number): void {
+    this.existingCourses = this.existingCourses.filter((item: ICourse) => item.id !== id);
+
+    this.existingCourses$$.next(this.existingCourses);
   }
 }

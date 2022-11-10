@@ -1,16 +1,16 @@
 <header class="header-container">
-  <div class="logo-container">
+  <div class="logo-container" routerLink="/courses">
     <i class="fa-solid fa-square-caret-right fa-2x"></i>
-    <p class="logo-text">VIDEO COURSE</p>
+    <span class="logo-text">VIDEO COURSES</span>
   </div>
-  <div class="buttons-container" *appIfAuthenticated="isAuthenticated$ | async">
-    <button class="user-button">
+  <div class="buttons-container">
+    <button class="user-button" *appIfAuthenticated="isAuthenticated">
       <i class="fa-solid fa-user"></i>
-      <p class="user-name">User login</p>
+      <p class="user-name">{{userName$ | async | titlecase}}</p>
     </button>
-    <button class="login-button" (click)="onLogOff()">
+    <button class="login-button" *appIfAuthenticated="(currentRoute$ | async) !== '/login'" (click)="onLogInLogOff()">
       <i class="fa-solid fa-right-from-bracket"></i>
-      <p class="authorization-text">Log off</p>
+      <p class="authorization-text">{{isAuthenticated ? 'Log Off' : 'Log in'}}</p>
     </button>
   </div>
 </header>

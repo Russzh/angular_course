@@ -3,9 +3,15 @@
 :host {
   display: block;
   background-color: white;
+  width: 100%;
 
-  .breadcrumb-text {
+  .breadcrumb-labels {
     margin-left: 10%;
     line-height: $headerHeight;
+
+    a {
+      color: black;
+      font-weight: 500;
+    }
   }
 }
